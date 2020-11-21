@@ -1,10 +1,10 @@
-# 서비스 한줄 소개
+# 💙 서비스 한줄 소개 💙
 
 - ### 그거 알아? 칭찬은 하면 할수록 기분이 좋아진다는거? 우리 모두 칭찬 중독이 되어보는거 어때?
 
 <br>
 
-# 서비스 명
+# 🐋 서비스 명 🐋
 
 - ### `칭찬할고래`
 
@@ -66,6 +66,13 @@ module.exports = db;
 ## `API 명세서`
 
 - ### [API 명세서](https://github.com/Praise-Whale/Praise_Server/wiki)
+
+<br>
+
+
+## `Android 프로젝트`
+
+- ### [Android](https://github.com/Praise-Whale/Praise-Whale-AOS)
 
 <br>
 
