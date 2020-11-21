@@ -8,5 +8,8 @@ router.get('/', function(req, res, next) {
 });
 
 
+router.get('/praise', userController.praiseUsers);
+router.post('/target', userController.userTarget);
+
 
 module.exports = router;
