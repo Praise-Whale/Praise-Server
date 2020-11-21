@@ -8,5 +8,6 @@ router.get('/', function(req, res, next) {
 
 router.use('/users', require('./users'));
 router.use('/home', require('./home'));
+router.use('/level', require('./level'));
 
 module.exports = router;

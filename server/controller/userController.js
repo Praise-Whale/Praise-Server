@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express.Router();
 const { PraiseTarget } = require('../models');
 const statusCdoe = require('../modules/statusCode');
 const responseMessage = require('../modules/responseMessage');
