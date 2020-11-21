@@ -23,36 +23,19 @@
 ## `models/index.js`
 
 ```javascript
-const Sequelize = require('sequelize');
-const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config.json')[env];
-const db = {};
-
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
 db.praise = require('./praise')(sequelize, Sequelize);
 db.praiseTarget = require('./praiseTarget')(sequelize, Sequelize);
 db.user = require('./user')(sequelize, Sequelize);
 db.isDo = require('./isDo')(sequelize, Sequelize);
   
 
-/** 1 : 1   Praise : P */
+/** 1 : 1 관계 */
 db.praise.hasOne(db.praiseTarget, { onDelete: 'cascade' });
 db.praiseTarget.belongsTo(db.praise);
 
 // M : N 관계
 db.user.belongsToMany(db.praise, { through: 'isDo', as: 'praiser' })
 db.praise.belongsToMany(db.user, { through: 'isDo', as: 'praised'})
-
-module.exports = db;
 ```
 
 <br>
