@@ -56,7 +56,7 @@ module.exports = db;
 
 ## `API 명세서`
 
-- ### [API 명세서](https://github.com/Praise-Whale/Praise_Server/wikiv)
+- ### [API 명세서](https://github.com/Praise-Whale/Praise_Server/wiki)
 
 <br>
 
