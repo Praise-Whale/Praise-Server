@@ -54,6 +54,13 @@ module.exports = db;
 
 <br>
 
+## `pm2 log`
+
+<img width="786" alt="스크린샷 2020-11-22 오전 7 47 23" src="https://user-images.githubusercontent.com/45676906/99889297-00cc3980-2c97-11eb-98c3-0cc35972292e.png">
+
+
+<br>
+
 ## `API 명세서`
 
 - ### [API 명세서](https://github.com/Praise-Whale/Praise_Server/wiki)
