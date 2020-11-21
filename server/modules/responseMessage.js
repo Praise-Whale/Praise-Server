@@ -15,6 +15,8 @@ module.exports = {
   PRAISE_USERS: "최근 칭찬 유저 조회 성공입니다",
   PRAISE_USERS_ADD: "칭찬 유저 가입",
 
+  PRAISE_LEVEL: "유저 칭찬 레벨 조회 성공입니다",
+
   /* 서버에러 */
   INTERNAL_SERVER_ERROR: "서버 내부 오류",
 }
