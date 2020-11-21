@@ -9,5 +9,6 @@ router.get('/', function(req, res, next) {
 router.use('/users', require('./users'));
 router.use('/home', require('./home'));
 router.use('/level', require('./level'));
+router.use('/praise', require('./collection'));
 
 module.exports = router;
