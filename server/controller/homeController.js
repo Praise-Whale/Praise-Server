@@ -15,8 +15,6 @@ module.exports = {
         .sort((a, b) => a[0] - b[0])
         .map((a) => a[1]);
     
-
-        console.log(praiseResult);
       //3. status: 200, message: id, daily_praise, mission_praise 반환
       return res.status(statusCode.OK).send(
         util.success(statusCode.OK, responseMessage.READ_HOME, {
