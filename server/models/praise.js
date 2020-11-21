@@ -16,6 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         //모델의 옵션들을 지정하는 곳
         freezeTableName: true,
-        timestamps: false,
+        timestamps: true,
     });
 };
