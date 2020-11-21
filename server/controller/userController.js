@@ -1,4 +1,4 @@
-const { PraiseTarget } = require('../models');
+const { praiseTarget } = require('../models');
 const statusCdoe = require('../modules/statusCode');
 const responseMessage = require('../modules/responseMessage');
 const util = require('../modules/util');
@@ -10,7 +10,7 @@ module.exports = {
    */
   praiseUsers: async (req, res) => {
     try {
-      const usersPraise = await PraiseTarget.findAll({
+      const usersPraise = await praiseTarget.findAll({
         limit: 3,
         attributes: {
           exclude: ['id', 'praiseId'],
@@ -19,6 +19,7 @@ module.exports = {
           ['name', 'DESC']
         ],
       })
+      console.log(usersPraise);
       res.status(statusCdoe.OK).send(util.success(statusCdoe.OK, responseMessage.PRAISE_USERS, usersPraise));
     } catch (err) {
       res.status(statusCdoe.INTERNAL_SERVER_ERROR).send(util.fail(statusCdoe.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
@@ -34,7 +35,7 @@ module.exports = {
     }
 
     try {
-      const user = await PraiseTarget.create({
+      const user = await praiseTarget.create({
         name,
         praiseId: id,
       })
