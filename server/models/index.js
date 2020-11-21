@@ -16,5 +16,15 @@ if (config.use_env_variable) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.user = require('./user')(sequelize, Sequelize);
+db.userLevel = require('./userLevel')(sequelize, Sequelize);
+
+db.praiseSentence = require('./praiseSentence')(sequelize, Sequelize);
+
+// 유저 - 레벨 ( 1:1 관계 )
+db.user.hasOne(db.userLevel, { onDelete: 'cascade'});
+db.userLevel.belongsTo(db.user);  
+
+
 
 module.exports = db;
