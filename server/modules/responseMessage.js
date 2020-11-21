@@ -12,6 +12,9 @@ module.exports = {
   NO_USER: "존재하지않는 유저 id 입니다.",
   MISS_MATCH_PW: "비밀번호가 일치하지 않습니다",
 
+  PRAISE_USERS: "최근 칭찬 유저 조회 성공입니다",
+  PRAISE_USERS_ADD: "칭찬 유저 가입",
+
   /* 서버에러 */
   INTERNAL_SERVER_ERROR: "서버 내부 오류",
 }
