@@ -12,8 +12,16 @@ if (config.use_env_variable) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
 db.Praise = require('./praise')(sequelize, Sequelize);
 db.PraiseTarget = require('./praiseTarget')(sequelize, Sequelize);
+db.user = require('./user')(sequelize, Sequelize);
+db.userLevel = require('./userLevel')(sequelize, Sequelize);
+db.praiseSentence = require('./praiseSentence')(sequelize, Sequelize);
+
+// 유저 - 레벨 ( 1:1 관계 )
+db.user.hasOne(db.userLevel, { onDelete: 'cascade'});
+db.userLevel.belongsTo(db.user);  
 
 /** 1 : 1   User : Post */
 db.Praise.hasOne(db.PraiseTarget, { onDelete: 'cascade' });
