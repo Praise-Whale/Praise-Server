@@ -16,6 +16,7 @@ module.exports = {
   PRAISE_USERS_ADD: "칭찬 유저 가입",
 
   PRAISE_LEVEL: "유저 칭찬 레벨 조회 성공입니다",
+  READ_HOME: "홈화면 조회입니다",
 
   /* 서버에러 */
   INTERNAL_SERVER_ERROR: "서버 내부 오류",
