@@ -12,9 +12,7 @@ module.exports = {
     try {
       const usersPraise = await praiseTarget.findAll({
         limit: 3,
-        attributes: {
-          exclude: ["id", "praiseId"],
-        },
+        attributes: ['name'],
         order: [["name", "DESC"]],
       });
       console.log(usersPraise);
