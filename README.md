@@ -57,3 +57,10 @@ module.exports = db;
 ## `API 명세서`
 
 - ### [API 명세서](https://github.com/Praise-Whale/Praise_Server/wikiv)
+
+<br>
+
+## `Contributor`
+
+- ### [최정균](https://github.com/wjdrbs96)
+- ### [최다인](https://github.com/DA-IN-droid)
