@@ -8,6 +8,8 @@
 
 - ### `칭찬할고래`
 
+![1](https://user-images.githubusercontent.com/45676906/99889339-71735600-2c97-11eb-8865-9c3a9d4783fd.png)
+
 <br>
 
 ## `ERD(Entity Relation Diagram)`
