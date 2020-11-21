@@ -36,7 +36,6 @@ module.exports = {
           as: 'praiser',
         }]
       })
-      console.log(praiseCount[0].dataValues.likeCount);
       // isDO 테이블 이름
 
       res.status(statusCdoe.OK).send(util.success(statusCdoe.OK, responseMessage.PRAISE_LEVEL, {

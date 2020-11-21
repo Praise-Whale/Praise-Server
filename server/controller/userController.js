@@ -15,7 +15,7 @@ module.exports = {
         attributes: ['name'],
         order: [["name", "DESC"]],
       });
-      console.log(usersPraise);
+
       res
         .status(statusCode.OK)
         .send(
