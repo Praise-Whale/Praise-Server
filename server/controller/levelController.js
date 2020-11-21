@@ -15,11 +15,9 @@ module.exports = {
           id: parseInt(userIdx)
         }
       })
-      console.log(userResult);
 
       // 현재 유저 레벨 
       const userLevel = userResult[0].userLevel;
-      console.log(userLevel + " ++++");
 
       // const praiseCount = await user.count({
       //   include: [{
@@ -38,13 +36,12 @@ module.exports = {
           as: 'praiser',
         }]
       })
-      console.log("testt");
+      console.log(praiseCount[0].dataValues.likeCount);
       // isDO 테이블 이름
-      console.log(JSON.stringify(praiseCount, null, 2));
 
       res.status(statusCdoe.OK).send(util.success(statusCdoe.OK, responseMessage.PRAISE_LEVEL, {
         userLevel,
-        needLikeCount: userLevel * 20 - praiseCount
+        needLikeCount: userLevel * 20 - praiseCount[0].dataValues.likeCount
       }));
     } catch (err) {
       res.status(statusCdoe.INTERNAL_SERVER_ERROR).send(util.fail(statusCdoe.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
