@@ -23,7 +23,7 @@
 
 ## `ERD(Entity Relation Diagram)`
 
-![스크린샷 2020-12-10 오후 5 54 26](https://user-images.githubusercontent.com/45676906/101749156-bf4de200-3b10-11eb-8d1a-7174b6b6dec3.png)
+![스크린샷 2020-12-10 오후 11 32 15](https://user-images.githubusercontent.com/45676906/101785299-f12a6d00-3b3f-11eb-814d-7bd2ff4e8204.png)
 
 
 <br>
