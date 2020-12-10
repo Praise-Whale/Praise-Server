@@ -23,7 +23,7 @@ db.isDo = require('./isPraised')(sequelize, Sequelize);
 db.praise.hasOne(db.praiseTarget, { onDelete: 'cascade' });
 db.praiseTarget.belongsTo(db.praise);
 
-db.user.belongsToMany(db.praise, { through: 'isDo', as: 'praiser' })
-db.praise.belongsToMany(db.user, { through: 'isDo', as: 'praised'})
+db.user.belongsToMany(db.praise, { through: 'isPraised', as: 'praised' })
+db.praise.belongsToMany(db.user, { through: 'isPraised', as: 'praiser'})
 
 module.exports = db;
