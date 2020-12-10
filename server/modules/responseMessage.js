@@ -6,6 +6,10 @@ module.exports = {
   SIGNUP_SUCCESS: "회원가입 성공입니다",
   ALREADY_NICKNAME: "닉네임이 존재합니다",
 
+  // 로그인
+  NOT_FOUND_USER: "존재하지 않는 유저입니다",
+  SINGIN_SUCCESS: "로그인 성공입니다",
+
   // TOKEN MESSAGE
   EMPTY_TOKEN : "토큰 값이 없습니다",
   EXPIRED_TOKEN : "토큰 값이 만료되었습니다",
