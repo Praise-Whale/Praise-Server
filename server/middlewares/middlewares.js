@@ -1,8 +1,8 @@
-const util = require("./util");
+const util = require("../modules/util");
 const responseMessage = require("../modules/responseMessage");
 const statusCode = require("../modules/statusCode");
 const { user } = require("../models");
-const jwt = require("./jwt");
+const jwt = require('../modules/jwt');
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 
