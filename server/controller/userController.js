@@ -1,8 +1,9 @@
 const statusCode = require("../modules/statusCode");
 const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
-const { user } = require('../models/index');
+const { user, praiseTarget } = require('../models/index');
 const jwt = require('../modules/jwt');
+const sequelize = require('sequelize');
 
 module.exports = {
   signup: async (req, res) => {
@@ -68,6 +69,56 @@ module.exports = {
       accessToken: accessToken,
       refreshToken: refreshToken
     }))
+  },
+
+  userHome: async (req, res) => {
+    const userIdx = req.userIdx;
     
+    const userHomeTap = await user.findAll({
+      group: 'users.id',
+      attributes: ['nickName', 'whaleName', 'userLevel', [sequelize.fn('COUNT', sequelize.col('praiseTargets.id')), 'praiseCount']],
+      where: {
+        id: userIdx
+      },
+      include: [{
+        model: praiseTarget,
+        attributes: []
+      }]
+    });
+
+    const { nickName, userLevel } = userHomeTap[0];
+
+    // console.log(userHomeTap[0].dataValues.whaleName);
+    // console.log(JSON.parse(JSON.stringify(userHomeTap[0])));
+    // console.log(whaleName);
+    // console.log(nickName);
+
+    const homeTapInfo = {
+      nickName: nickName,
+      whaleName: userHomeTap[0].dataValues.whaleName,
+      userLevel: userLevel,
+      praiseCount: userHomeTap[0].dataValues.praiseCount
+    }
+
+    switch(userLevel) {
+      case 0:
+        homeTapInfo.praiseNeedCount = 5 - userHomeTap[0].dataValues.praiseCount;
+        break;
+      case 1:
+        homeTapInfo.praiseNeedCount = 10 - userHomeTap[0].dataValues.praiseCount;
+        break;
+      case 2:
+        homeTapInfo.praiseNeedCount = 30 - userHomeTap[0].dataValues.praiseCount;
+        break;
+      case 3:
+        homeTapInfo.praiseNeedCount = 50 - userHomeTap[0].dataValues.praiseCount;
+        break;
+      case 4:
+        homeTapInfo.praiseNeedCount = 100 - userHomeTap[0].dataValues.praiseCount;
+        break;
+    }
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, homeTapInfo));
+    return;
   }
 }
