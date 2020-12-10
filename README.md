@@ -5,6 +5,14 @@
 
 <br>
 
+# ✔ 고래단 서버 컨벤션 ✔
+
+- [브랜치 전략](https://github.com/Praise-Whale/Praise_Server/blob/develop/server/info/%EB%B8%8C%EB%9E%9C%EC%B9%98%EC%A0%84%EB%9E%B5%EA%B3%BC%20%ED%92%80%EB%A6%AC%ED%80%98%EC%8A%A4%ED%8A%B8.md)
+- [코드 컨벤션](https://github.com/Praise-Whale/Praise_Server/blob/develop/server/info/%EC%BD%94%EB%93%9C%20%EC%BB%A8%EB%B2%A4%EC%85%98.md)
+- [커멧 컨벤션](https://github.com/Praise-Whale/Praise_Server/blob/develop/server/info/%EC%BB%A4%EB%A9%A7%EC%BB%A8%EB%B2%A4%EC%85%98.md)
+
+<br>
+
 # 🐋 서비스 명 🐋
 
 - ### `칭찬할고래`
@@ -15,48 +23,8 @@
 
 ## `ERD(Entity Relation Diagram)`
 
-<img width="586" alt="스크린샷 2020-11-22 오전 4 32 34" src="https://user-images.githubusercontent.com/45676906/99885915-c1442400-2c7b-11eb-90b8-641ee7a30bfa.png">
+![스크린샷 2020-12-10 오후 5 54 26](https://user-images.githubusercontent.com/45676906/101749156-bf4de200-3b10-11eb-8d1a-7174b6b6dec3.png)
 
-
-<br>
-
-## `models/index.js`
-
-```javascript
-db.praise = require('./praise')(sequelize, Sequelize);
-db.praiseTarget = require('./praiseTarget')(sequelize, Sequelize);
-db.user = require('./user')(sequelize, Sequelize);
-db.isDo = require('./isDo')(sequelize, Sequelize);
-  
-
-/** 1 : 1 관계 */
-db.praise.hasOne(db.praiseTarget, { onDelete: 'cascade' });
-db.praiseTarget.belongsTo(db.praise);
-
-// M : N 관계
-db.user.belongsToMany(db.praise, { through: 'isDo', as: 'praiser' })
-db.praise.belongsToMany(db.user, { through: 'isDo', as: 'praised'})
-```
-
-<br>
-
-## `pm2 log`
-
-<img width="786" alt="스크린샷 2020-11-22 오전 7 47 23" src="https://user-images.githubusercontent.com/45676906/99889297-00cc3980-2c97-11eb-98c3-0cc35972292e.png">
-
-
-<br>
-
-## `API 명세서`
-
-- ### [API 명세서](https://github.com/Praise-Whale/Praise_Server/wiki)
-
-<br>
-
-
-## `Android 프로젝트`
-
-- ### [Android](https://github.com/Praise-Whale/Praise-Whale-AOS)
 
 <br>
 
