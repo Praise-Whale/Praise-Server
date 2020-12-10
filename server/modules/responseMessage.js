@@ -13,6 +13,8 @@ module.exports = {
   // 최근 칭찬 유저 조회
   LATELY_PRAISE_USER: "최근 칭찬 유저 조회 성공입니다",
 
+  // 유저 세번 째 탭 조회
+  USER_HOME_SUCCESS: "유저 홈 조회 성공입니다",
 
   // TOKEN MESSAGE
   EMPTY_TOKEN : "토큰 값이 없습니다",
