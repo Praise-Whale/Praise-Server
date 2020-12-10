@@ -7,12 +7,12 @@ const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 
 module.exports = {
-  sign: async (users) => {
+  sign: async (idx) => {
     const payload = {
-      userIdx: users.userIdx,
+      userIdx: idx
     };
     const result = {
-      token: jwt.sign(payload, secretKey, options),
+      accessToken: jwt.sign(payload, secretKey, options),
       refreshToken: jwt.sign(payload, secretKey, refreshOptions),
     };
 
@@ -21,7 +21,7 @@ module.exports = {
       refreshToken: result.refreshToken
     }, {
       where: {
-        id: users.userIdx
+        id: idx
       }
     })
     return result;
