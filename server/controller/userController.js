@@ -27,7 +27,7 @@ module.exports = {
     const userResult = await user.create({
       nickName: nickName,
       whaleName: whaleName,
-      userLevel: 1,
+      userLevel: 0,
       alarmCheck: true
     });
 
