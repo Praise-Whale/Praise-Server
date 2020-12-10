@@ -31,4 +31,4 @@
 ## `Contributor`
 
 - ### [최정균](https://github.com/wjdrbs96)
-- ### [최다인](https://github.com/DA-IN-droid)
+- ### [최다인](https://github.com/Chedda98)
