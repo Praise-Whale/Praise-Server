@@ -17,6 +17,6 @@ module.exports = {
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praiseUsers));
     return;
-    
+
   }
 }

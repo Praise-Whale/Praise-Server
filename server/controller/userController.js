@@ -6,9 +6,9 @@ const jwt = require('../modules/jwt');
 
 module.exports = {
   signup: async (req, res) => {
-    const { nickName } = req.body;
+    const { nickName, whaleName } = req.body;
 
-    if (!nickName) {
+    if (!nickName || !whaleName) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
@@ -26,6 +26,7 @@ module.exports = {
 
     const userResult = await user.create({
       nickName: nickName,
+      whaleName: whaleName,
       userLevel: 1,
       alarmCheck: true
     });
