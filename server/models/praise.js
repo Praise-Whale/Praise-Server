@@ -1,17 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('praise', {
         //모델의 Attributes (Column)을 정의하는곳
-        daily_praise: {
+        today_praise: {
             type: DataTypes.TEXT(),
             allowNull: false,
         },
-        mission_praise: {
+        praise_description: {
             type: DataTypes.TEXT(),
             allowNull: false,
         },
+        created_at: {
+            type: DataTypes.DATE,
+
+        }
     }, {
         //모델의 옵션들을 지정하는 곳
         freezeTableName: true,
-        timestamps: true,
+        timestamps: false,
     });
 };
+

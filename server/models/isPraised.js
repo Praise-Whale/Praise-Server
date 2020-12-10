@@ -1,8 +1,7 @@
-const { user, praise } = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('isDo', {
-    is_do: {
+  return sequelize.define('isPraised', {
+    is_praised: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     }

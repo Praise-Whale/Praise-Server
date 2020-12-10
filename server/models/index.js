@@ -16,7 +16,7 @@ db.Sequelize = Sequelize;
 db.praise = require('./praise')(sequelize, Sequelize);
 db.praiseTarget = require('./praiseTarget')(sequelize, Sequelize);
 db.user = require('./user')(sequelize, Sequelize);
-db.isDo = require('./isDo')(sequelize, Sequelize);
+db.isDo = require('./isPraised')(sequelize, Sequelize);
   
 
 /** 1 : 1   Praise : P */
