@@ -6,5 +6,6 @@ const jwtMiddlewares = require('../middlewares/middlewares');
 router.post('/signup', userController.signup);
 router.post('/signin', userController.signin);
 router.get('/home', jwtMiddlewares.userJwt, userController.userHome);
+router.post('/alarm', jwtMiddlewares.userJwt, userController.alaramCheck);
 
 module.exports = router;

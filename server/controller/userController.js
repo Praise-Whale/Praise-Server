@@ -115,5 +115,26 @@ module.exports = {
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, homeTapInfo));
     return;
+  },
+
+  alaramCheck: async (req, res) => {
+    const { alarmSet } = req.body;
+    const userIdx = req.userIdx;
+
+    if (alarmSet === undefined) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
+
+    const alarmUpdate = await user.update({
+      alarmCheck: alarmSet, 
+    }, {
+      where: {
+        id: userIdx
+      }
+    });
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.ALARM_UPDATE_SUCCESS));
+    return;
   }
 }
