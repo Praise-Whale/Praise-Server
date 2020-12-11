@@ -97,19 +97,19 @@ module.exports = {
 
     switch(userLevel) {
       case 0:
-        homeTapInfo.praiseNeedCount = 5 - praiseCount;
+        homeTapInfo.levelUpNeedCount = 5;
         break;
       case 1:
-        homeTapInfo.praiseNeedCount = 10 - praiseCount;
+        homeTapInfo.levelUpNeedCount = 10;
         break;
       case 2:
-        homeTapInfo.praiseNeedCount = 30 - praiseCount;
+        homeTapInfo.levelUpNeedCount = 30;
         break;
       case 3:
-        homeTapInfo.praiseNeedCount = 50 - praiseCount;
+        homeTapInfo.levelUpNeedCount = 50;
         break;
       case 4:
-        homeTapInfo.praiseNeedCount = 100 - praiseCount;
+        homeTapInfo.levelUpNeedCount = 100;
         break;
     }
 
