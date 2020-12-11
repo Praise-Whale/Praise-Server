@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('praiseTarget', {
         //모델의 Attributes (Column)을 정의하는곳
-        name: {
+        praisedName: {
             type: DataTypes.STRING(20),
             allowNull: false,
         },
