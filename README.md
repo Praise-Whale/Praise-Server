@@ -17,13 +17,13 @@
 
 - ### `칭찬할고래`
 
-![1](https://user-images.githubusercontent.com/45676906/99889339-71735600-2c97-11eb-8865-9c3a9d4783fd.png)
+![1](https://user-images.githubusercontent.com/45676906/101926565-b0515780-3c16-11eb-848a-c55b729cabad.png)
 
 <br>
 
 ## `ERD(Entity Relation Diagram)`
 
-![스크린샷 2020-12-10 오후 11 32 15](https://user-images.githubusercontent.com/45676906/101785299-f12a6d00-3b3f-11eb-814d-7bd2ff4e8204.png)
+![스크린샷 2020-12-12 오전 1 10 44](https://user-images.githubusercontent.com/45676906/101926689-dd9e0580-3c16-11eb-8b4a-e27ac0ad1b4e.png)
 
 
 <br>
