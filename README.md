@@ -21,6 +21,27 @@
 
 <br>
 
+## `models/index.js`
+
+```javascript
+db.praise = require('./praise')(sequelize, Sequelize);
+db.praiseTarget = require('./praiseTarget')(sequelize, Sequelize);
+db.user = require('./user')(sequelize, Sequelize);
+db.isPraised = require('./isPraised')(sequelize, Sequelize);
+  
+/** 1 : 1   Praise : P */
+db.praise.hasOne(db.praiseTarget, { onDelete: 'cascade' });
+db.praiseTarget.belongsTo(db.praise);
+
+db.user.belongsToMany(db.praise, { through: 'isPraised', as: 'praised' })
+db.praise.belongsToMany(db.user, { through: 'isPraised', as: 'praiser'})
+
+db.user.hasMany(db.praiseTarget, { ondDelete: 'cascade' });
+db.praiseTarget.belongsTo(db.user, { onDelete: 'cascade' });
+```
+
+<br>
+
 ## `ERD(Entity Relation Diagram)`
 
 ![스크린샷 2020-12-12 오전 1 10 44](https://user-images.githubusercontent.com/45676906/101926689-dd9e0580-3c16-11eb-8b4a-e27ac0ad1b4e.png)
