@@ -86,35 +86,30 @@ module.exports = {
       }]
     });
 
-    const { nickName, userLevel } = userHomeTap[0];
-
-    // console.log(userHomeTap[0].dataValues.whaleName);
-    // console.log(JSON.parse(JSON.stringify(userHomeTap[0])));
-    // console.log(whaleName);
-    // console.log(nickName);
-
+    const { nickName, whaleName, userLevel, praiseCount } = userHomeTap[0].dataValues;
+    
     const homeTapInfo = {
       nickName: nickName,
-      whaleName: userHomeTap[0].dataValues.whaleName,
+      whaleName: whaleName,
       userLevel: userLevel,
-      praiseCount: userHomeTap[0].dataValues.praiseCount
+      praiseCount: praiseCount
     }
 
     switch(userLevel) {
       case 0:
-        homeTapInfo.praiseNeedCount = 5 - userHomeTap[0].dataValues.praiseCount;
+        homeTapInfo.praiseNeedCount = 5 - praiseCount;
         break;
       case 1:
-        homeTapInfo.praiseNeedCount = 10 - userHomeTap[0].dataValues.praiseCount;
+        homeTapInfo.praiseNeedCount = 10 - praiseCount;
         break;
       case 2:
-        homeTapInfo.praiseNeedCount = 30 - userHomeTap[0].dataValues.praiseCount;
+        homeTapInfo.praiseNeedCount = 30 - praiseCount;
         break;
       case 3:
-        homeTapInfo.praiseNeedCount = 50 - userHomeTap[0].dataValues.praiseCount;
+        homeTapInfo.praiseNeedCount = 50 - praiseCount;
         break;
       case 4:
-        homeTapInfo.praiseNeedCount = 100 - userHomeTap[0].dataValues.praiseCount;
+        homeTapInfo.praiseNeedCount = 100 - praiseCount;
         break;
     }
 
