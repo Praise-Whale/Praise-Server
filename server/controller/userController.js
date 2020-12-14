@@ -42,6 +42,29 @@ module.exports = {
     }))
   },
 
+  nickNameCheck: async (req, res) => {
+    const { nickName } = req.body;
+
+    if (!nickName) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
+
+    const nickNameCheck = await user.findOne({
+      where: {
+        nickName: nickName
+      }
+    });
+
+    if (nickNameCheck) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_NICKNAME));
+      return;
+    }
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.POSSIBLE_NICKNAME));
+    return;
+  },
+
   signin: async (req, res) => {
     const { nickName } = req.body;
 

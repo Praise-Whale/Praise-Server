@@ -6,6 +6,7 @@ module.exports = {
   // 회원가입
   SIGNUP_SUCCESS: "회원가입 성공입니다",
   ALREADY_NICKNAME: "닉네임이 존재합니다",
+  POSSIBLE_NICKNAME: "가능한 닉네임 입니다.",
 
   // 로그인
   NOT_FOUND_USER: "존재하지 않는 유저입니다",
