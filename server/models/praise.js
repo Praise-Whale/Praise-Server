@@ -9,10 +9,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT(),
             allowNull: false,
         },
-        created_at: {
-            type: DataTypes.DATE,
-
-        }
     }, {
         //모델의 옵션들을 지정하는 곳
         freezeTableName: true,
