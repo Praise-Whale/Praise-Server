@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    whaleName: {
+      type: DataTypes.STRING(20),
+      allowNull: false
+    },
     refreshToken: {
       type: DataTypes.STRING(200),
       allowNull: true
