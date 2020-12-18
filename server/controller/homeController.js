@@ -9,8 +9,8 @@ module.exports = {
     const userIdx = req.userIdx;
 
     try {
-      const praiseCountResult = await praiseTarget.findAll({
-        attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
+      const praiseMainHome = await praiseTarget.findAll({
+        attributes: ['nickName', [sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
         include: [{
         model: user,
           attributes: [],
@@ -20,19 +20,12 @@ module.exports = {
         }],
       });
 
-      const { praiseCount } = praiseCountResult[0].dataValues;
+      const { praiseCount } = praiseMainHome[0].dataValues;
 
       const homePraise = await praise.findOne({
         attributes: ['today_praise', 'praise_description'],
         where: {
           id: praiseCount + 1
-        }
-      });
-
-      const userNickName = await user.findAll({
-        attributes: ['nickName'],
-        where: {
-          id: userIdx
         }
       });
 
