@@ -4,7 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     is_praised: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-    }
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+  }
   }, {
     timestamps: false,
     freezeTableName: true,

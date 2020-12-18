@@ -8,5 +8,6 @@ router.get('/', function(req, res, next) {
 
 router.use('/praise', require('./praise'));
 router.use('/users', require('./users'));
+router.use('/', require('./home'));
 
 module.exports = router;

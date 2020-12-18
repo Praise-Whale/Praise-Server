@@ -27,6 +27,7 @@ module.exports = {
 
   praiseCollection: async (req, res) => {
     const userIdx = req.userIdx;
+
     try {
       const collectionPraise = await praiseTarget.findAll({
         attributes: ['praisedName'],
@@ -51,7 +52,7 @@ module.exports = {
 
       const praiseCountResult = await praiseTarget.findAll({
         attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']]
-      })
+      });
 
       const { praiseCount } = praiseCountResult[0].dataValues;
       const { nickName } = userNickName[0];

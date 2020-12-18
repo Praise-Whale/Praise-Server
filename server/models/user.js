@@ -16,9 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     alarmCheck: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaulValue: true
+      defaultValue: true
     }
-    
   }, {
     freezeTableName: true,
     timestamps: false,
