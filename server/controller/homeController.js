@@ -17,7 +17,7 @@ module.exports = {
           where: {
             id: userIdx
           }
-        }]
+        }],
       });
 
       const { praiseCount } = praiseCountResult[0].dataValues;
