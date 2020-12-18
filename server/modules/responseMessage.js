@@ -21,7 +21,7 @@ module.exports = {
   // 알람 변경
   ALARM_UPDATE_SUCCESS: "알람 변경 성공입니다",
 
-  // 유저 세번 째 탭 조회
+  // 유저 첫 번쨰, 세 번째 탭 조회
   USER_HOME_SUCCESS: "유저 홈 조회 성공입니다",
 
   // TOKEN MESSAGE
