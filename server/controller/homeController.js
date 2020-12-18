@@ -33,8 +33,7 @@ module.exports = {
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
         homePraise,
-        nickName,
-        praiseCount
+        nickName
       }));
       return;
     } catch (err) {
