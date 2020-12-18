@@ -20,7 +20,7 @@ module.exports = {
         }],
       });
 
-      const { nickName, praiseCount } = praiseMainHome[0].dataValues;
+      const { praiseCount } = praiseMainHome[0].dataValues;
 
       const homePraise = await praise.findOne({
         attributes: ['today_praise', 'praise_description'],
@@ -28,6 +28,8 @@ module.exports = {
           id: praiseCount + 1
         }
       });
+
+      const { nickName } = praiseMainHome[0].user;
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
         homePraise,
