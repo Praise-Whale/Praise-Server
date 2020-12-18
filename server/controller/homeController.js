@@ -9,27 +9,27 @@ module.exports = {
     const userIdx = req.userIdx;
 
     try {
-      const homePraise = await praise.findOne({
-        attributes: ['today_praise', 'praise_description'],
+      const praiseMainHome = await praiseTarget.findAll({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
         include: [{
-          model: praiseTarget,
-          attributes: ['praiseId']
+        model: user,
+          attributes: ['nickName'],
+          where: {
+            id: userIdx
+          }
         }],
       });
 
-      const userNickName = await user.findAll({
-        attributes: ['nickName'],
+      const { praiseCount } = praiseMainHome[0].dataValues;
+
+      const homePraise = await praise.findOne({
+        attributes: ['today_praise', 'praise_description'],
         where: {
-          id: userIdx
+          id: praiseCount + 1
         }
       });
 
-      const praiseCountResult = await praiseTarget.findAll({
-        attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']]
-      });
-
-      const { praiseCount } = praiseCountResult[0].dataValues;
-      const { nickName } = userNickName[0];
+      const { nickName } = praiseMainHome[0].user;
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
         homePraise,
