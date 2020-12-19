@@ -10,14 +10,16 @@ module.exports = (sequelize, DataTypes) => {
             reference: {
                 model: 'praise',
                 key: 'id',
-            }
+            },
+            allowNull: false,
         },
         userId: {
             type: DataTypes.INTEGER,
             reference: {
                 model: 'users',
                 key: 'id',
-            }
+            },
+            allowNull: false,
         }
     }, {
         //모델의 옵션들을 지정하는 곳
