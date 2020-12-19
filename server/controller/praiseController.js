@@ -8,6 +8,7 @@ module.exports = {
   praiserUp: async (req, res) => {
     const userIdx = req.userIdx;
     const { praisedName } = req.body;
+    const { praiseId } = req.params;
     
     if (!praisedName) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
@@ -15,8 +16,20 @@ module.exports = {
     }
 
     const praiserResult = await praiseTarget.create({
-      praisedName: praisedName
+      praisedName: praisedName,
+      userId: userIdx,
+      praiseId: praiseId 
     });
+
+    // const praiseIdCheck = await praiseTarget.findOne({
+    //   where: {
+    //     praiseId: praiseId
+    //   }
+    // });
+    // if (praiseIdCheck) {
+    //   res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    //   return;
+    // }
 
     const { id } = praiserResult;
 
@@ -33,6 +46,7 @@ module.exports = {
 
     if (toastCount == 5 || toastCount == 10 || toastCount == 30 || toastCount == 50 || toastCount == 100) {
       levelCheck = true;
+      toastCount = levelCheck;
       return;
     }
 

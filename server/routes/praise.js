@@ -5,6 +5,6 @@ const jwtMiddlewares = require('../middlewares/middlewares');
 
 router.get('/target', jwtMiddlewares.userJwt, praiseController.praiseTarget);
 router.get('/collection', jwtMiddlewares.userJwt, praiseController.praiseCollection);
-router.post('/register', jwtMiddlewares.userJwt, praiseController.praiserUp);
+router.post('/praiser/:praiseId', jwtMiddlewares.userJwt, praiseController.praiserUp);
 
 module.exports = router;
