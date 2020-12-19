@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         praise_description: {
             type: DataTypes.TEXT(),
             allowNull: false,
-        }
+        },
     }, {
         //모델의 옵션들을 지정하는 곳
         freezeTableName: true,

@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('isPraised', {
     is_praised: {
@@ -7,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     created_at: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: false
   }
   }, {
     timestamps: false,

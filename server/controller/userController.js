@@ -4,6 +4,7 @@ const util = require("../modules/util");
 const { user, praiseTarget } = require('../models/index');
 const jwt = require('../modules/jwt');
 const sequelize = require('sequelize');
+const praise = require("../models/praise");
 
 module.exports = {
   signup: async (req, res) => {
