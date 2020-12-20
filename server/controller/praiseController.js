@@ -10,28 +10,16 @@ module.exports = {
     const { praisedName } = req.body;
     const { praiseId } = req.params;
     
-    if (!praisedName) {
+    if (!praisedName || !praiseId) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
 
-    const praiserResult = await praiseTarget.create({
+    await praiseTarget.create({
       praisedName: praisedName,
+      praiseId: praiseId,
       userId: userIdx,
-      praiseId: praiseId 
     });
-
-    // const praiseIdCheck = await praiseTarget.findOne({
-    //   where: {
-    //     praiseId: praiseId
-    //   }
-    // });
-    // if (praiseIdCheck) {
-    //   res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
-    //   return;
-    // }
-
-    const { id } = praiserResult;
 
     const toastMsgResult = await praiseTarget.findAll({
       attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'toastCount']],
@@ -46,12 +34,10 @@ module.exports = {
 
     if (toastCount == 5 || toastCount == 10 || toastCount == 30 || toastCount == 50 || toastCount == 100) {
       levelCheck = true;
-      toastCount = levelCheck;
-      return;
     }
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISERUP_SUCCESS, {
-      id,
+      toastCount,
       levelCheck
     }));
 },
