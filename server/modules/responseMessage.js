@@ -12,11 +12,17 @@ module.exports = {
   NOT_FOUND_USER: "존재하지 않는 유저입니다",
   SINGIN_SUCCESS: "로그인 성공입니다",
 
+  // 칭찬한 사람 등록
+  PRAISERUP_SUCCESS: "칭찬한 사람이 등록되었습니다",
+
   // 최근 칭찬 유저 조회
   LATELY_PRAISE_USER: "최근 칭찬 유저 조회 성공입니다",
 
   // 칭찬 컬렉션 조회
   PRAISE_ALL_COLLECTION: "칭찬 컬렉션 전체 조회 성공입니다",
+
+  // 닉네임 변경
+  NICKNAME_UPDATE_SUCCESS: "닉네임 변경 성공입니다",
 
   // 알람 변경
   ALARM_UPDATE_SUCCESS: "알람 변경 성공입니다",

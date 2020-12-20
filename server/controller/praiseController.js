@@ -5,6 +5,57 @@ const { user, praise, praiseTarget } = require('../models/index');
 const sequelize = require('sequelize');
 
 module.exports = {
+  praiserUp: async (req, res) => {
+    const userIdx = req.userIdx;
+    const { praisedName } = req.body;
+    const { praiseId } = req.params;
+    
+    if (!praisedName) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
+
+    const praiserResult = await praiseTarget.create({
+      praisedName: praisedName,
+      userId: userIdx,
+      praiseId: praiseId 
+    });
+
+    // const praiseIdCheck = await praiseTarget.findOne({
+    //   where: {
+    //     praiseId: praiseId
+    //   }
+    // });
+    // if (praiseIdCheck) {
+    //   res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    //   return;
+    // }
+
+    const { id } = praiserResult;
+
+    const toastMsgResult = await praiseTarget.findAll({
+      attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'toastCount']],
+      where: {
+        userId: userIdx
+      } 
+    });
+
+    const { toastCount } = toastMsgResult[0].dataValues;
+
+    levelCheck = false;
+
+    if (toastCount == 5 || toastCount == 10 || toastCount == 30 || toastCount == 50 || toastCount == 100) {
+      levelCheck = true;
+      toastCount = levelCheck;
+      return;
+    }
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISERUP_SUCCESS, {
+      id,
+      levelCheck
+    }));
+},
+
   praiseTarget: async (req, res) => {
     const userIdx = req.userIdx;
 
