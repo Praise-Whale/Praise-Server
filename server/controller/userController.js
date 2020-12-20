@@ -174,8 +174,6 @@ module.exports = {
       }
     });
 
-    const { id } = userResult;
-
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.NICKNAME_UPDATE_SUCCESS));
     return;
   },
