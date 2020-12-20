@@ -142,17 +142,22 @@ module.exports = {
   },
 
   nickNameChange: async (req, res) => {
-    const { nickName, newNickName } = req.body;
+    const { newNickName } = req.body;
     const userIdx = req.userIdx;
     
-    if(!nickName) {
+    // if(!nickName) {
+    //   res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    //   return;
+    // }
+
+    if(!newNickName) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
 
     const nickNameCheck = await user.findOne({
       where: {
-        nickName: nickName
+        nickName: newNickName
       }
     });
 
@@ -162,7 +167,7 @@ module.exports = {
     }
 
     const userResult = await user.update({
-      newNickName: nickName,
+      nickName: newNickName,
     }, {
       where: {
         id: userIdx
