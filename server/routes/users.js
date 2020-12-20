@@ -9,6 +9,6 @@ router.get('/home', jwtMiddlewares.userJwt, userController.userHome);
 router.post('/alarm', jwtMiddlewares.userJwt, userController.alaramCheck);
 router.get('/check/:nickName', userController.nickNameCheck);
 router.put('/nickname', jwtMiddlewares.userJwt, userController.nickNameChange);
-router.post('/token', jwtMiddlewares.refreshToken);
+router.put('/token', jwtMiddlewares.refreshToken);
 
 module.exports = router;
