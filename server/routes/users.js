@@ -8,5 +8,6 @@ router.post('/signin', userController.signin);
 router.get('/home', jwtMiddlewares.userJwt, userController.userHome);
 router.post('/alarm', jwtMiddlewares.userJwt, userController.alaramCheck);
 router.get('/check/:nickName', userController.nickNameCheck);
+router.post('/nickChange', jwtMiddlewares.userJwt, userController.nickNameChange);
 
 module.exports = router;

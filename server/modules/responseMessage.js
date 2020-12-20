@@ -21,6 +21,9 @@ module.exports = {
   // 칭찬 컬렉션 조회
   PRAISE_ALL_COLLECTION: "칭찬 컬렉션 전체 조회 성공입니다",
 
+  // 닉네임 변경
+  NICKNAME_UPDATE_SUCCESS: "닉네임 변경 성공입니다",
+
   // 알람 변경
   ALARM_UPDATE_SUCCESS: "알람 변경 성공입니다",
 
