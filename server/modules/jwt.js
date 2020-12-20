@@ -50,9 +50,9 @@ module.exports = {
   },
 
   // refreshToken Verify
-  refresh: async (refreshToken) => {
+  refresh: async (refresh_Token) => {
     try {
-      const result = jwt.verify(refreshToken, secretKey);
+      const result = jwt.verify(refresh_Token, secretKey);
 
       if (result.userIdx === undefined) {
         return TOKEN_INVALID;
@@ -64,14 +64,16 @@ module.exports = {
         }
       })
 
-      const { usersRefreshToken } = users;
+      const { id, refreshToken } = users.dataValues;
+      
 
-      if (refreshToken !== usersRefreshToken) {
+      if (refresh_Token !== refreshToken) {
         console.log("invalid refresh token");
         return TOKEN_INVALID;
       }
+      
       const payload = {
-        userIdx: user[0].userIdx,
+        userIdx: id
       };
       const dto = {
         accessToken: jwt.sign(payload, secretKey, options),
