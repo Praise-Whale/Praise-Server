@@ -23,25 +23,32 @@ module.exports = {
       created_at: moment().format('YYYY-MM-DD')
     });
 
-    const toastMsgResult = await praiseTarget.findAll({
-      attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'toastCount']],
+    const praiserResult = await praiseTarget.findAll({
+      attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
+      include: [{
+        model: user,
+        attributes: ['userLevel']
+      }],
       where: {
         userId: userIdx
       } 
     });
 
-    const { toastCount } = toastMsgResult[0].dataValues;
+    const { praiseCount } = praiserResult[0].dataValues;
+    const { userLevel } = praiserResult[0].dataValues.user
 
     levelCheck = false;
-
-    if (toastCount == 5 || toastCount == 10 || toastCount == 30 || toastCount == 50 || toastCount == 100) {
-      levelCheck = true;
+    
+    const praiser_success = {
+      levelCheck,
+      userLevel
     }
 
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISERUP_SUCCESS, {
-      toastCount,
-      levelCheck
-    }));
+    if (praiseCount == 5 || praiseCount == 10 || praiseCount == 30 || praiseCount == 50 || praiseCount == 100) {
+      success_result.levelCheck = true;
+    }
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISERUP_SUCCESS, praiser_success));
 },
 
   praiseTarget: async (req, res) => {
