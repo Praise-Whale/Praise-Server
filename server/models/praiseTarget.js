@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id',
             },
             allowNull: false,
+        },
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false
         }
     }, {
         //모델의 옵션들을 지정하는 곳
