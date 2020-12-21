@@ -144,11 +144,6 @@ module.exports = {
   nickNameChange: async (req, res) => {
     const { newNickName } = req.body;
     const userIdx = req.userIdx;
-    
-    // if(!nickName) {
-    //   res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
-    //   return;
-    // }
 
     if(!newNickName) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
