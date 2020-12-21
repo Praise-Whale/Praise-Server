@@ -37,15 +37,15 @@ module.exports = {
     const { praiseCount } = praiserResult[0].dataValues;
     const { userLevel } = praiserResult[0].dataValues.user
 
-    levelCheck = false;
+    levelUpCheck = false;
     
     const praiser_success = {
-      levelCheck,
+      levelUpCheck,
       userLevel
     }
 
     if (praiseCount == 5 || praiseCount == 10 || praiseCount == 30 || praiseCount == 50 || praiseCount == 100) {
-      success_result.levelCheck = true;
+      success_result.levelUpCheck = true;
     }
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISERUP_SUCCESS, praiser_success));
