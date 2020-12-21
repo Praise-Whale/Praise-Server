@@ -45,7 +45,7 @@ module.exports = {
     }
 
     if (praiseCount == 5 || praiseCount == 10 || praiseCount == 30 || praiseCount == 50 || praiseCount == 100) {
-      success_result.levelUpCheck = true;
+      praiser_success.levelUpCheck = true;
     }
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISERUP_SUCCESS, praiser_success));
