@@ -13,7 +13,6 @@ module.exports = {
         attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
         include: [{
         model: user,
-          attributes: ['nickName'],
           where: {
             id: userIdx
           }
@@ -29,12 +28,7 @@ module.exports = {
         }
       });
 
-      const { nickName } = praiseMainHome[0].user;
-
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
-        homePraise,
-        nickName
-      }));
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, homePraise));
       return;
     } catch (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
