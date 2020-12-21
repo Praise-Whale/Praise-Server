@@ -56,13 +56,13 @@ module.exports = {
 
     try {
       const praiseUsers = await praiseTarget.findAll({
-        attributes: ['name'],
+        attributes: ['praisedName'],
         limit: 3,
         where: {
           userId: userIdx
         } 
       });
-  
+
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praiseUsers));
       return;
     } catch (err) {
@@ -73,10 +73,16 @@ module.exports = {
 
   praiseCollection: async (req, res) => {
     const userIdx = req.userIdx;
+    const { year, month } = req.query;
 
+    if (!year || !month) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
+    
     try {
       const collectionPraise = await praiseTarget.findAll({
-        attributes: ['praisedName'],
+        attributes: ['praisedName', 'created_at'],
         include: [{
           model: praise,
           attributes: ['today_praise']
@@ -88,6 +94,10 @@ module.exports = {
           }
         }],
       });
+
+      const { created_at } = collectionPraise[0].dataValues;
+      console.log(created_at);
+
 
       const userNickName = await user.findAll({
         attributes: ['nickName'],
