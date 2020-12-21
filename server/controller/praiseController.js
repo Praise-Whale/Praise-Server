@@ -1,6 +1,7 @@
 const statusCode = require('../modules/statusCode');
 const responseMessage = require('../modules/responseMessage');
 const util = require('../modules/util');
+const moment = require('moment');
 const { user, praise, praiseTarget } = require('../models/index');
 const sequelize = require('sequelize');
 
@@ -19,6 +20,7 @@ module.exports = {
       praisedName: praisedName,
       praiseId: praiseId,
       userId: userIdx,
+      created_at: moment().format('YYYY-MM-DD')
     });
 
     const toastMsgResult = await praiseTarget.findAll({
@@ -104,5 +106,5 @@ module.exports = {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
       return;
     }
-  }
+  },
 }
