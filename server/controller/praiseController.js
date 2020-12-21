@@ -63,16 +63,7 @@ module.exports = {
         } 
       });
 
-      console.log(praiseUsers);
-      const praisedPeople = [];
-      
-      
-      for (let i = 0; i < 3; ++i) {
-        const { praisedName } = praiseUsers[0].dataValues;
-        praisedPeople.push(praisedName);
-      }
-
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praisedPeople));
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praiseUsers));
       return;
     } catch (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
