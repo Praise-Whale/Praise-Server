@@ -10,16 +10,13 @@ module.exports = {
 
     try {
       const praiseMainHome = await praiseTarget.findAll({
-        attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
-        include: [{
-        model: user,
-          where: {
-            id: userIdx
-          }
-        }],
+        attributes: ['praiseId', [sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
+        where: {
+          id: userIdx
+        }
       });
 
-      const { praiseCount } = praiseMainHome[0].dataValues;
+      const { praiseCount, praiseId } = praiseMainHome[0].dataValues;
 
       const homePraise = await praise.findOne({
         attributes: ['today_praise', 'praise_description'],
@@ -28,7 +25,15 @@ module.exports = {
         }
       });
 
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, homePraise));
+      const { today_praise, praise_description } = homePraise.dataValues;
+
+      const homeResult = {
+        praiseId,
+        today_praise,
+        praise_description,
+      }
+
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, homeResult));
       return;
     } catch (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));

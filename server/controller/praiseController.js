@@ -63,6 +63,7 @@ module.exports = {
         } 
       });
 
+      console.log(praiseUsers);
       const praisedPeople = [];
       
       
