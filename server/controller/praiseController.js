@@ -1,8 +1,7 @@
 const statusCode = require('../modules/statusCode');
 const responseMessage = require('../modules/responseMessage');
 const util = require('../modules/util');
-const { user, praise, praiseTarget } = require('../models/index');
-const sequelize = require('sequelize');
+const { user, praise, praiseTarget, sequelize } = require('../models/index');
 
 module.exports = {
   praiserUp: async (req, res) => {
@@ -98,6 +97,47 @@ module.exports = {
         collectionPraise,
         nickName,
         praiseCount
+      }));
+      return;
+    } catch (err) {
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+      return;
+    }
+  },
+  praiseYearMonth: async (req, res) => {
+    const userIdx = req.userIdx;
+    const { year, month } = req.params;
+
+    try {
+      const praiseCountResult = await sequelize.query(`
+      SELECT COUNT(id) as praiseCount
+      FROM praiseTarget
+      where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'`);
+
+      const yearMonthPraise = await sequelize.query(`
+      SELECT praisedName, today_praise
+      FROM praiseTarget
+      JOIN praise ON praiseTarget.praiseId = praise.id
+      Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%';
+      `);
+
+
+      const praiseCount = praiseCountResult[0];
+      const collectionPraise = yearMonthPraise[0];
+
+      const userNickName = await user.findAll({ // 닉네임 부분 클라가 박을 수 있으면 코드 없애기
+        attributes: ['nickName'],
+        where: {
+          id: userIdx
+        }
+      });
+
+      const { nickName } = userNickName[0];
+  
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_YEAR_MONTH_COLLECTION, {
+        praiseCount,
+        collectionPraise,
+        nickName
       }));
       return;
     } catch (err) {
