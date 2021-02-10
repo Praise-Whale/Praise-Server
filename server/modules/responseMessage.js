@@ -24,6 +24,9 @@ module.exports = {
   // 칭찬 컬렉션 년,월별 조회
   PRAISE_YEAR_MONTH_COLLECTION: "칭찬 컬렉션 년,월별 조회 성공입니다",
 
+  // 칭찬 랭킹 조회
+  PRAISE_RANKING_SUCCESS: "칭찬 랭킹 조회 성공입니다",
+
   // 닉네임 변경
   NICKNAME_UPDATE_SUCCESS: "닉네임 변경 성공입니다",
 

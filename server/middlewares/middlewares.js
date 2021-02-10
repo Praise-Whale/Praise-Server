@@ -60,7 +60,7 @@ module.exports = {
     if (newToken == TOKEN_INVALID) {
       return res
         .status(statusCode.UNAUTHORIZED)
-        .send(util.fail(statusCode.UNAUTHORIZED, resMessage.INVALID_TOKEN));
+        .send(util.fail(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
     }
 
     res

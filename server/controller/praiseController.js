@@ -121,23 +121,47 @@ module.exports = {
       Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%';
       `);
 
-
       const praiseCount = praiseCountResult[0];
       const collectionPraise = yearMonthPraise[0];
-
-      const userNickName = await user.findAll({ // 닉네임 부분 클라가 박을 수 있으면 코드 없애기
-        attributes: ['nickName'],
-        where: {
-          id: userIdx
-        }
-      });
-
-      const { nickName } = userNickName[0];
   
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_YEAR_MONTH_COLLECTION, {
         praiseCount,
-        collectionPraise,
-        nickName
+        collectionPraise
+      }));
+      return;
+    } catch (err) {
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+      return;
+    }
+  },
+  praiseRanking: async (req, res) => {
+    const userIdx = req.userIdx;
+
+    try {
+      const praiseCountResult = await sequelize.query(`
+      SELECT COUNT(DISTINCT praisedName) as totalPraiserCount
+      FROM praiseTarget`);
+
+      const totalPraiserCount = praiseCountResult[0];
+
+      // const praiseCountResult = await praiseTarget.findAll({
+      //   attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'totalPraiserCount']],
+      //   group: ['praiseTarget.praisedName']
+      // });
+
+      // const { totalPraiserCount } = praiseCountResult[0].dataValues;
+
+      const rankingCountResult = await praiseTarget.findAll({
+        attributes: ['praisedName', [sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'praiserCount']],
+        group: ['praiseTarget.praisedName'],
+        raw: true,
+        order: sequelize.literal('praiserCount DESC'),
+        limit: 5
+      });
+  
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_RANKING_SUCCESS, {
+        totalPraiserCount,
+        rankingCountResult
       }));
       return;
     } catch (err) {
