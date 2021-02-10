@@ -144,13 +144,6 @@ module.exports = {
 
       const totalPraiserCount = praiseCountResult[0];
 
-      // const praiseCountResult = await praiseTarget.findAll({
-      //   attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'totalPraiserCount']],
-      //   group: ['praiseTarget.praisedName']
-      // });
-
-      // const { totalPraiserCount } = praiseCountResult[0].dataValues;
-
       const rankingCountResult = await praiseTarget.findAll({
         attributes: ['praisedName', [sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'praiserCount']],
         group: ['praiseTarget.praisedName'],
