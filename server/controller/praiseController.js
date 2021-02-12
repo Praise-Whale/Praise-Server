@@ -121,7 +121,7 @@ module.exports = {
       Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%';
       `);
 
-      const praiseCount = praiseCountResult[0];
+      const [{ praiseCount }] = praiseCountResult[0];
       const collectionPraise = yearMonthPraise[0];
   
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_YEAR_MONTH_COLLECTION, {
@@ -142,7 +142,7 @@ module.exports = {
       SELECT COUNT(DISTINCT praisedName) as totalPraiserCount
       FROM praiseTarget`);
 
-      const totalPraiserCount = praiseCountResult[0];
+      const [{ totalPraiserCount }] = praiseCountResult[0];
 
       const rankingCountResult = await praiseTarget.findAll({
         attributes: ['praisedName', [sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'praiserCount']],
