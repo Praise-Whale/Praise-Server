@@ -66,19 +66,21 @@ module.exports = {
     const userIdx = req.userIdx;
     const { year, month } = req.params;
 
-    if (year == 0 && month == 0) {
+    if (year == 0 && month == 0) { // 전체 조회
       try {
-        const praiseCountResult = await praiseTarget.findAll({
-          attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']]
-        });
+        const praiseCountResult = await sequelize.query(`
+        SELECT COUNT(id) as praiseCount
+        FROM praiseTarget
+        where userId = ${userIdx}`);
 
         const wholePraise = await sequelize.query(`
         SELECT praisedName, created_at, today_praise
         FROM praiseTarget
-        JOIN praise ON praiseTarget.praiseId = praise.id;
+        JOIN praise ON praiseTarget.praiseId = praise.id
+        where userId = ${userIdx};
         `);
 
-        const { praiseCount } = praiseCountResult[0].dataValues;
+        const [{ praiseCount }] = praiseCountResult[0];
         const collectionPraise = wholePraise[0];
 
         res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
@@ -91,18 +93,20 @@ module.exports = {
         return;
       }
     }
-  else {
+  else { // 연도, 월별 조회
     try {
       const praiseCountResult = await sequelize.query(`
       SELECT COUNT(id) as praiseCount
       FROM praiseTarget
-      where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'`);
+      where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
+      and userId = ${userIdx}`);
 
       const yearMonthPraise = await sequelize.query(`
       SELECT praisedName, created_at, today_praise
       FROM praiseTarget
       JOIN praise ON praiseTarget.praiseId = praise.id
-      Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%';
+      Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
+      and userId = ${userIdx};
       `);
 
       const [{ praiseCount }] = praiseCountResult[0];
