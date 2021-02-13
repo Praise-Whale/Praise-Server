@@ -61,66 +61,52 @@ module.exports = {
       return;
     }
   },
-  // 칭찬 카드 전체 조회
+  // 칭찬 카드 조회(전체 + 연도, 월별)
   praiseCollection: async (req, res) => {
-    const userIdx = req.userIdx;
-
-    try {
-      const collectionPraise = await praiseTarget.findAll({
-        attributes: ['praisedName'],
-        include: [{
-          model: praise,
-          attributes: ['today_praise']
-        }, {
-          model: user,
-          attributes: [],
-          where: {
-            id: userIdx
-          }
-        }],
-      });
-
-      const userNickName = await user.findAll({
-        attributes: ['nickName'],
-        where: {
-          id: userIdx
-        }
-      });
-
-      const praiseCountResult = await praiseTarget.findAll({
-        attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']]
-      });
-
-      const { praiseCount } = praiseCountResult[0].dataValues;
-      const { nickName } = userNickName[0];
-  
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
-        collectionPraise,
-        nickName,
-        praiseCount
-      }));
-      return;
-    } catch (err) {
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
-      return;
-    }
-  },
-  // 칭찬 카드 연도, 월별 조회(전체와 합칠 예정)
-  praiseYearMonth: async (req, res) => {
     const userIdx = req.userIdx;
     const { year, month } = req.params;
 
+    if (year == 0 && month == 0) { // 전체 조회
+      try {
+        const praiseCountResult = await sequelize.query(`
+        SELECT COUNT(id) as praiseCount
+        FROM praiseTarget
+        where userId = ${userIdx}`);
+
+        const wholePraise = await sequelize.query(`
+        SELECT praisedName, created_at, today_praise
+        FROM praiseTarget
+        JOIN praise ON praiseTarget.praiseId = praise.id
+        where userId = ${userIdx};
+        `);
+
+        const [{ praiseCount }] = praiseCountResult[0];
+        const collectionPraise = wholePraise[0];
+
+        res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
+          praiseCount,
+          collectionPraise
+        }));
+        return;
+      } catch (err) {
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+        return;
+      }
+    }
+  else { // 연도, 월별 조회
     try {
       const praiseCountResult = await sequelize.query(`
       SELECT COUNT(id) as praiseCount
       FROM praiseTarget
-      where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'`);
+      where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
+      and userId = ${userIdx}`);
 
       const yearMonthPraise = await sequelize.query(`
-      SELECT praisedName, today_praise
+      SELECT praisedName, created_at, today_praise
       FROM praiseTarget
       JOIN praise ON praiseTarget.praiseId = praise.id
-      Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%';
+      Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
+      and userId = ${userIdx};
       `);
 
       const [{ praiseCount }] = praiseCountResult[0];
@@ -135,7 +121,8 @@ module.exports = {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
       return;
     }
-  },
+  }
+},
   // 칭찬 랭킹
   praiseRanking: async (req, res) => {
     const userIdx = req.userIdx;
