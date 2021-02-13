@@ -39,7 +39,7 @@ module.exports = {
       toastCount,
       levelCheck
     }));
-},
+  },
 
   praiseTarget: async (req, res) => {
     const userIdx = req.userIdx;
@@ -134,6 +134,10 @@ module.exports = {
       return;
     }
   },
+  
+  /**
+   * 칭찬 랭킹
+   */
   praiseRanking: async (req, res) => {
     const userIdx = req.userIdx;
 
