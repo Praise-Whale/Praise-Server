@@ -4,6 +4,7 @@ const util = require('../modules/util');
 const { user, praise, praiseTarget, sequelize } = require('../models/index');
 
 module.exports = {
+  // 칭찬한 사람 등록
   praiserUp: async (req, res) => {
     const userIdx = req.userIdx;
     const { praisedName } = req.body;
@@ -40,8 +41,7 @@ module.exports = {
       levelCheck
     }));
   },
-
-  // 최근 칭찬 유저
+  // 최근 칭찬 유저 조회
   latelyParaiseUsers: async (req, res) => {
     const userIdx = req.userIdx;
 
@@ -61,7 +61,7 @@ module.exports = {
       return;
     }
   },
-
+  // 칭찬 카드 전체 조회
   praiseCollection: async (req, res) => {
     const userIdx = req.userIdx;
 
@@ -105,6 +105,7 @@ module.exports = {
       return;
     }
   },
+  // 칭찬 카드 연도, 월별 조회(전체와 합칠 예정)
   praiseYearMonth: async (req, res) => {
     const userIdx = req.userIdx;
     const { year, month } = req.params;
@@ -135,10 +136,7 @@ module.exports = {
       return;
     }
   },
-  
-  /**
-   * 칭찬 랭킹
-   */
+  // 칭찬 랭킹
   praiseRanking: async (req, res) => {
     const userIdx = req.userIdx;
 

@@ -5,6 +5,7 @@ const { user, praise, praiseTarget } = require('../models/index');
 const sequelize = require('sequelize');
 
 module.exports = {
+  // 홈 화면
   praiseHome: async (req, res) => {
     const userIdx = req.userIdx;
 
