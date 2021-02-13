@@ -41,7 +41,8 @@ module.exports = {
     }));
   },
 
-  praiseTarget: async (req, res) => {
+  // 최근 칭찬 유저
+  latelyParaiseUsers: async (req, res) => {
     const userIdx = req.userIdx;
 
     try {
