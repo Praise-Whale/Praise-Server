@@ -66,18 +66,18 @@ module.exports = {
     const userIdx = req.userIdx;
     const { year, month } = req.params;
 
-    if (year == 0 && month == 0) { // 전체 조회
+    if (month == 0) { // 올해의 칭찬 카드 전체 조회
       try {
         const praiseCountResult = await sequelize.query(`
         SELECT COUNT(id) as praiseCount
         FROM praiseTarget
-        where userId = ${userIdx}`);
+        where created_at LIKE '%${year}%' and userId = ${userIdx}`);
 
         const wholePraise = await sequelize.query(`
         SELECT praisedName, created_at, today_praise
         FROM praiseTarget
         JOIN praise ON praiseTarget.praiseId = praise.id
-        where userId = ${userIdx};
+        where created_at LIKE '%${year}%' and userId = ${userIdx};
         `);
 
         const [{ praiseCount }] = praiseCountResult[0];
