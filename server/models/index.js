@@ -21,8 +21,9 @@ db.user = require('./user')(sequelize, Sequelize);
 db.praise.hasOne(db.praiseTarget, { onDelete: 'cascade' });
 db.praiseTarget.belongsTo(db.praise);
 
-db.user.belongsToMany(db.praise, { through: 'isPraised', as: 'praised' })
-db.praise.belongsToMany(db.user, { through: 'isPraised', as: 'praiser'})
+/** N : M   User : Praise */
+db.user.belongsToMany(db.praise, { through: 'isPraised', as: 'praised' });
+db.praise.belongsToMany(db.user, { through: 'isPraised', as: 'praiser'});
 
 /** 1 : N   User : PraiseTarget */
 db.user.hasMany(db.praiseTarget, { ondDelete: 'cascade' });
