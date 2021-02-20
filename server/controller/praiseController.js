@@ -15,10 +15,13 @@ module.exports = {
       return;
     }
 
+    const created_at = new Date();
+
     await praiseTarget.create({
       praisedName: praisedName,
       praiseId: praiseId,
       userId: userIdx,
+      created_at: created_at
     });
 
     const toastMsgResult = await praiseTarget.findAll({
@@ -44,7 +47,6 @@ module.exports = {
   // 최근 칭찬 3명 유저 조회
   latelyParaiseUsers: async (req, res) => {
     const userIdx = req.userIdx;
-    console.log(userIdx);
 
     try {
       const praiseUsers = await praiseTarget.findAll({
