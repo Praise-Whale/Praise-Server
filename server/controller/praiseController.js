@@ -44,6 +44,7 @@ module.exports = {
   // 최근 칭찬 3명 유저 조회
   latelyParaiseUsers: async (req, res) => {
     const userIdx = req.userIdx;
+    console.log(userIdx);
 
     try {
       const praiseUsers = await praiseTarget.findAll({
