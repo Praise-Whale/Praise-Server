@@ -21,11 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: true
     },
-    praiseFlag: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
-    }
   }, {
     freezeTableName: true,
     timestamps: false,

@@ -1,7 +1,7 @@
 const statusCode = require('../modules/statusCode');
 const responseMessage = require('../modules/responseMessage');
 const util = require('../modules/util');
-const { user, praise, praiseTarget, sequelize } = require('../models/index');
+const { praiseTarget, isPraised, sequelize } = require('../models/index');
 
 module.exports = {
   // 칭찬한 사람 등록
@@ -9,7 +9,8 @@ module.exports = {
     const userIdx = req.userIdx;
     const { praisedName } = req.body;
     const { praiseId } = req.params;
-    
+    console.log(userIdx);
+
     if (!praisedName || !praiseId) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
@@ -23,6 +24,15 @@ module.exports = {
       userId: userIdx,
       created_at: created_at
     });
+    
+
+    await isPraised.create({
+      is_praised: true,
+      created_at: created_at,
+      userId: userIdx,
+      praiseId: praiseId
+    });
+  
 
     const toastMsgResult = await praiseTarget.findAll({
       attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'toastCount']],

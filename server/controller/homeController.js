@@ -3,6 +3,18 @@ const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
 const { user, praise, praiseTarget } = require('../models/index');
 const sequelize = require('sequelize');
+const schedule = require('node-schedule');
+
+const rule = new schedule.RecurrenceRule();
+
+rule.tz = 'Asia/Seoul';
+rule.hour = 20; 
+rule.minute = 56;
+rule.second = 10;
+
+const praiseSchedule = schedule.scheduleJob(rule, async () =>{
+  console.log("Teest");
+});
 
 module.exports = {
   // 홈 화면
