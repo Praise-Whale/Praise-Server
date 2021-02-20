@@ -9,7 +9,6 @@ module.exports = {
     const userIdx = req.userIdx;
     const { praisedName } = req.body;
     const { praiseId } = req.params;
-    console.log(userIdx);
 
     if (!praisedName || !praiseId) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
@@ -26,12 +25,12 @@ module.exports = {
     });
     
 
-    await isPraised.create({
-      is_praised: true,
-      created_at: created_at,
-      userId: userIdx,
-      praiseId: praiseId
-    });
+    // await isPraised.create({
+    //   is_praised: true,
+    //   created_at: created_at,
+    //   userId: userIdx,
+    //   praiseId: praiseId
+    // });
   
 
     const toastMsgResult = await praiseTarget.findAll({
@@ -57,17 +56,21 @@ module.exports = {
   // 최근 칭찬 3명 유저 조회
   latelyParaiseUsers: async (req, res) => {
     const userIdx = req.userIdx;
+    console.log(userIdx);
 
     try {
-      const praiseUsers = await praiseTarget.findAll({
-        attributes: ['praisedName'],
-        limit: 3,
-        where: {
-          userId: userIdx
-        } 
-      });
+      const praiseUsers = await sequelize.query(`
+      SELECT distinct praisedName FROM praiseTarget WHERE userId = ${userIdx}
+      `);
+      // const praiseUsers = await praiseTarget.findAll({
+      //   attributes: ['praisedName'],
+      //   limit: 3,
+      //   where: {
+      //     userId: userIdx
+      //   } 
+      // });
   
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praiseUsers));
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praiseUsers[0]));
       return;
     } catch (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
