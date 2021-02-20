@@ -44,7 +44,7 @@ db.praiseTarget.belongsTo(db.user, { onDelete: 'cascade' });
 
 ## `ERD(Entity Relation Diagram)`
 
-![스크린샷 2021-02-18 오후 11 24 28](https://user-images.githubusercontent.com/45676906/108370848-72893480-7240-11eb-8b4e-dce5a7611a85.png)
+![스크린샷 2021-02-20 오후 10 56 37](https://user-images.githubusercontent.com/45676906/108597936-ec4f2880-73ce-11eb-9a62-ddc7d224daba.png)
 
 
 <br>
