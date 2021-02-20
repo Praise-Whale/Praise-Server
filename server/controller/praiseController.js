@@ -47,7 +47,7 @@ module.exports = {
 
     try {
       const praiseUsers = await praiseTarget.findAll({
-        attributes: ['name'],
+        attributes: ['praisedName'],
         limit: 3,
         where: {
           userId: userIdx
