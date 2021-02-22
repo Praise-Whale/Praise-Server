@@ -32,8 +32,11 @@ module.exports = {
         },
       });
 
-      if (praiseCount > maxPraiseId) {
-        return praise.id(1);
+      for (let i = 0; i < maxPraiseId; i++) {
+        if (praise.id > maxPraiseId) {
+          continue;
+        }
+        praise.id = 1;
       }
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
