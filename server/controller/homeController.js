@@ -11,7 +11,6 @@ module.exports = {
 
     try {
       const maxPraiseId = await praise.max('id');
-      const minPraiseId = await praise.min('id');
 
       const praiseMainHome = await praiseTarget.findAll({
         attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
@@ -34,7 +33,7 @@ module.exports = {
       });
 
       if (praise.id > maxPraiseId) {
-        return praise.id = minPraiseId;
+        return praiseId = 1;
       }
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
