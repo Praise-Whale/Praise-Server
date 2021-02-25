@@ -59,7 +59,7 @@ module.exports = {
 
     try {
       const praiseUsers = await sequelize.query(`
-      SELECT distinct praisedName FROM praiseTarget WHERE userId = ${userIdx}
+      SELECT distinct praisedName FROM praiseTarget WHERE userId = ${userIdx} LIMIT 3
       `);
       // const praiseUsers = await praiseTarget.findAll({
       //   attributes: ['praisedName'],
