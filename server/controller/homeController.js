@@ -10,6 +10,8 @@ module.exports = {
     const userIdx = req.userIdx;
 
     try {
+      const maxPraiseId = await praise.max('id');
+
       const praiseMainHome = await praiseTarget.findAll({
         attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
         include: [{
@@ -27,14 +29,15 @@ module.exports = {
         attributes: ['today_praise', 'praise_description'],
         where: {
           id: praiseCount + 1
-        }
+        },
       });
 
-      const { nickName } = praiseMainHome[0].user;
+      if (praise.id > maxPraiseId) {
+        return praiseId = 1;
+      }
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
-        homePraise,
-        nickName
+        homePraise
       }));
       return;
     } catch (err) {
