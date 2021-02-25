@@ -43,4 +43,5 @@ module.exports = {
   AUTH_SUCCESS : "인증에 성공했습니다",
   ISSUE_SUCCESS: "새로운 토큰이 생성되었습니다",
   SUCCESS_TOKEN_REPLACEMENT: "토큰 재발급 했습니다",
+  
 }
