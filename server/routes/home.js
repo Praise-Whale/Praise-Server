@@ -3,6 +3,6 @@ const router = express.Router();
 const homeController = require('../controller/homeController');
 const jwtMiddlewares = require('../middlewares/middlewares');
 
-router.get('/home', jwtMiddlewares.userJwt, homeController.praiseHome);
+router.get('/home/:praiseId', jwtMiddlewares.userJwt, homeController.praiseHome);
 
 module.exports = router;

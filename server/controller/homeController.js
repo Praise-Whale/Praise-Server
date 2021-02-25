@@ -8,6 +8,12 @@ module.exports = {
   // 홈 화면
   praiseHome: async (req, res) => {
     const userIdx = req.userIdx;
+    let { praiseId } = req.params;
+
+    if (praiseId === undefined) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    } 
 
     try {
       const maxPraiseId = await praise.max('id');
@@ -23,10 +29,9 @@ module.exports = {
         }],
       });
 
-      const { praiseCount } = praiseMainHome[0].dataValues;
 
       const homePraise = await praise.findOne({
-        attributes: ['today_praise', 'praise_description'],
+        attributes: ['id', 'today_praise', 'praise_description'],
         where: {
           id: praiseCount + 1
         },
