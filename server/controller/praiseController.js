@@ -113,14 +113,14 @@ module.exports = {
       const praiseCountResult = await sequelize.query(`
       SELECT COUNT(id) as praiseCount
       FROM praiseTarget
-      where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
+      where created_at LIKE '%${year}%' and created_at LIKE '%${month}-%'
       and userId = ${userIdx}`);
 
       const yearMonthPraise = await sequelize.query(`
       SELECT praisedName, created_at, today_praise
       FROM praiseTarget
       JOIN praise ON praiseTarget.praiseId = praise.id
-      Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
+      Where created_at LIKE '%${year}%' and created_at LIKE '%${month}-%'
       and userId = ${userIdx};
       `);
 
