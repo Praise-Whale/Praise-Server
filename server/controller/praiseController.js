@@ -170,7 +170,6 @@ module.exports = {
   // 칭찬 대상별 칭찬 내역 부르기
   eachTargetPraise: async (req, res) => {
     const userIdx = req.userIdx;
-    // const praisedName = req.params;
 
     try {
       const rankingCountResult = await sequelize.query(`
@@ -178,10 +177,6 @@ module.exports = {
       FROM praiseTarget
       where userId = ${userIdx};
       `);
-
-      // const rankingCountResult = await praiseTarget.findAll({
-      //   attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'praiseCount']]
-      // });
 
       const [{ praiseCount }] = rankingCountResult[0];
 
@@ -191,7 +186,6 @@ module.exports = {
       JOIN praise ON praiseTarget.praiseId = praise.id
       where userId = ${userIdx};
       `);
-      // where praisedName LIKE '%${praisedName}%'
 
       const collectionPraise = targetPraise[0];
 
