@@ -166,5 +166,42 @@ module.exports = {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
       return;
     }
+  },
+  // 칭찬 대상별 칭찬 내역 부르기
+  eachTargetPraise: async (req, res) => {
+    const userIdx = req.userIdx;
+    // const praisedName = req.params;
+
+    try {
+      const rankingCountResult = await sequelize.query(`
+      SELECT COUNT(praiseId) as praiseCount
+      FROM praiseTarget
+      where userId = ${userIdx};
+      `);
+
+      // const rankingCountResult = await praiseTarget.findAll({
+      //   attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'praiseCount']]
+      // });
+
+      const [{ praiseCount }] = rankingCountResult[0];
+
+      const targetPraise = await sequelize.query(`
+      SELECT praisedName, created_at, today_praise
+      FROM praiseTarget
+      JOIN praise ON praiseTarget.praiseId = praise.id
+      where userId = ${userIdx};
+      `);
+      // where praisedName LIKE '%${praisedName}%'
+
+      const collectionPraise = targetPraise[0];
+
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.EACH_PRAISE_SUCCESS, {
+        praiseCount,
+        collectionPraise
+      }));
+    } catch (err) {
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+      return;
+    }
   }
 }

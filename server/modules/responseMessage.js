@@ -27,6 +27,9 @@ module.exports = {
   // 칭찬 랭킹 조회
   PRAISE_RANKING_SUCCESS: "칭찬 랭킹 조회 성공입니다",
 
+  // 해당 대상 칭찬 카드 조회
+  EACH_PRAISE_SUCCESS: "해당 대상 칭찬 카드 조회 성공입니다",
+
   // 닉네임 변경
   NICKNAME_UPDATE_SUCCESS: "닉네임 변경 성공입니다",
 
