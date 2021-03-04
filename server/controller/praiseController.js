@@ -170,12 +170,18 @@ module.exports = {
   // 칭찬 대상별 칭찬 내역 부르기
   eachTargetPraise: async (req, res) => {
     const userIdx = req.userIdx;
+    const { praisedName } = req.query;
+
+    if (!praisedName) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
 
     try {
       const rankingCountResult = await sequelize.query(`
-      SELECT COUNT(praiseId) as praiseCount
+      SELECT COUNT(praisedName) as praiseCount
       FROM praiseTarget
-      where userId = ${userIdx};
+      where praisedName = '${praisedName}' and userId = ${userIdx};
       `);
 
       const [{ praiseCount }] = rankingCountResult[0];
@@ -184,7 +190,7 @@ module.exports = {
       SELECT praisedName, created_at, today_praise
       FROM praiseTarget
       JOIN praise ON praiseTarget.praiseId = praise.id
-      where userId = ${userIdx};
+      where praisedName = '${praisedName}' and userId = ${userIdx};
       `);
 
       const collectionPraise = targetPraise[0];

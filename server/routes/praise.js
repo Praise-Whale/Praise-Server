@@ -7,6 +7,6 @@ router.get('/target', jwtMiddlewares.userJwt, praiseController.latelyParaiseUser
 router.get('/:year/:month', jwtMiddlewares.userJwt, praiseController.praiseCollection);
 router.get('/ranking', jwtMiddlewares.userJwt, praiseController.praiseRanking);
 router.post('/:praiseId', jwtMiddlewares.userJwt, praiseController.praiserUp);
-router.get('/eachTarget', jwtMiddlewares.userJwt, praiseController.eachTargetPraise);
+router.get('/', jwtMiddlewares.userJwt, praiseController.eachTargetPraise);
 
 module.exports = router;
