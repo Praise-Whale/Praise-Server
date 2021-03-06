@@ -1,6 +1,7 @@
 const statusCode = require('../modules/statusCode');
 const responseMessage = require('../modules/responseMessage');
 const util = require('../modules/util');
+const users = require('../models/query/users');
 const { praiseTarget, isPraised, sequelize } = require('../models/index');
 
 module.exports = {
@@ -143,18 +144,19 @@ module.exports = {
     const userIdx = req.userIdx;
 
     try {
-      const praiseCountResult = await sequelize.query(`
-      SELECT COUNT(DISTINCT praisedName) as totalPraiserCount
-      FROM praiseTarget`);
-
-      const [{ totalPraiserCount }] = praiseCountResult[0];
+      const praiseCountResult = await users.userRanking(userIdx);
+  
+      const totalPraiserCount = praiseCountResult[0].praiseCount;
 
       const rankingCountResult = await praiseTarget.findAll({
         attributes: ['praisedName', [sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'praiserCount']],
+        where: {
+          userId: userIdx
+        },
         group: ['praiseTarget.praisedName'],
         raw: true,
         order: sequelize.literal('praiserCount DESC'),
-        limit: 5
+        limit: 5,
       });
   
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_RANKING_SUCCESS, {
