@@ -133,24 +133,14 @@ module.exports = {
       return;
     }
 
-    const nickNameCheck = await user.findOne({
-      where: {
-        nickName: newNickName
-      }
-    });
+    const nickNameCheck = await userService.nickNameCheck(newNickName);
 
     if (nickNameCheck) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_NICKNAME));
       return;
     }
 
-    const userResult = await user.update({
-      nickName: newNickName,
-    }, {
-      where: {
-        id: userIdx
-      }
-    });
+    const userResult = await userService.nickNameChange(newNickName, userIdx);
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.NICKNAME_UPDATE_SUCCESS));
     return;

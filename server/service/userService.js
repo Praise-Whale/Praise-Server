@@ -41,5 +41,20 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+
+  nickNameChange: async (nickName, userIdx) => {
+    try {
+      const nickNameChange = await user.update({
+        nickName: nickName,
+      }, {
+        where: {
+          id: userIdx
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
 }
