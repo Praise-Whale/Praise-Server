@@ -25,15 +25,6 @@ module.exports = {
       created_at: created_at
     });
     
-
-    // await isPraised.create({
-    //   is_praised: true,
-    //   created_at: created_at,
-    //   userId: userIdx,
-    //   praiseId: praiseId
-    // });
-  
-
     const toastMsgResult = await praiseTarget.findAll({
       attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'toastCount']],
       where: {
