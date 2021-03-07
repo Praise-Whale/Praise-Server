@@ -67,7 +67,7 @@ module.exports = {
     try {
       if (month === 0) {
         const monthPraiseCount = await praise.userMonthPraiseCount(year, userIdx);
-        const whoalPraise = await praise.userWholePraise(year, userIdx);
+        const wholePraise = await praise.userWholePraise(year, userIdx);
 
         return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
           monthPraiseCount,
@@ -77,7 +77,7 @@ module.exports = {
 
       const yearPraiseCount = await praise.userYearPraiseCount(year, month, userIdx);
   
-      const collectionPraise = await praise.userYearWhoalPraise(year, month, userIdx);
+      const collectionPraise = await praise.userYearWholePraise(year, month, userIdx);
 
       const praiseCount = yearPraiseCount[0].praiseCount;
       
