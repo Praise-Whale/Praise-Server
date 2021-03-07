@@ -10,6 +10,17 @@ const test = {
       console.log(err);
       throw err;
     }
+  },
+
+  latelyPraiseUsers: async (userIdx) => {
+    const query = `SELECT distinct praisedName FROM praiseTarget WHERE userId = ${userIdx} LIMIT 3`;
+    try {
+      const result = await pool.queryParam(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 const statusCode = require('../modules/statusCode');
 const responseMessage = require('../modules/responseMessage');
 const util = require('../modules/util');
-const users = require('../models/query/users');
+const praise = require('../models/query/praise');
 const { praiseTarget, isPraised, sequelize } = require('../models/index');
 
 module.exports = {
@@ -50,18 +50,9 @@ module.exports = {
     const userIdx = req.userIdx;
 
     try {
-      const praiseUsers = await sequelize.query(`
-      SELECT distinct praisedName FROM praiseTarget WHERE userId = ${userIdx} LIMIT 3
-      `);
-      // const praiseUsers = await praiseTarget.findAll({
-      //   attributes: ['praisedName'],
-      //   limit: 3,
-      //   where: {
-      //     userId: userIdx
-      //   } 
-      // });
+      const praiseUsers = await praise.latelyPraiseUsers(userIdx);
   
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praiseUsers[0]));
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praiseUsers));
       return;
     } catch (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
@@ -135,7 +126,7 @@ module.exports = {
     const userIdx = req.userIdx;
 
     try {
-      const praiseCountResult = await users.userRanking(userIdx);
+      const praiseCountResult = await praise.userRanking(userIdx);
   
       const totalPraiserCount = praiseCountResult[0].praiseCount;
 
