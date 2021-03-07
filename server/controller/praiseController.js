@@ -1,7 +1,7 @@
 const statusCode = require('../modules/statusCode');
 const responseMessage = require('../modules/responseMessage');
 const util = require('../modules/util');
-const praise = require('../models/query/praise');
+const praise = require('../models/dao/praise');
 const { praiseTarget, isPraised, sequelize } = require('../models/index');
 
 module.exports = {
