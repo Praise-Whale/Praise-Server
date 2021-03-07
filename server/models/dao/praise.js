@@ -21,6 +21,54 @@ const test = {
       console.log(err);
       throw err;
     }
+  },
+
+  userMonthPraiseCount: async (year, userIdx) => {
+    const query = `SELECT COUNT(id) as praiseCount FROM praiseTarget where created_at LIKE '%${year}%' and userId = ${userIdx}`;
+    try {
+      const result = await pool.queryParam(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }, 
+
+  userYearPraiseCount: async (year, month, userIdx) => {
+    const query = ` SELECT COUNT(id) as praiseCount FROM praiseTarget where created_at LIKE '%${year}%' and created_at LIKE '%${month}%' and userId = ${userIdx}`;
+    try {
+       const result = await pool.queryParam(query);
+       return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  },
+  
+  userWholePraise: async (year, userIdx) => {
+    const query = `SELECT praisedName, created_at, today_praise FROM praiseTarget 
+                  JOIN praise ON praiseTarget.praiseId = praise.id where created_at LIKE '%${year}%' and userId = ${userIdx}`;
+    try {
+      const result = await pool.queryParam(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }, 
+
+  userYearWhoalPraise: async (year, month, userIdx) => {
+    const query = `SELECT praisedName, created_at, today_praise FROM praiseTarget
+                  JOIN praise ON praiseTarget.praiseId = praise.id
+                  Where created_at LIKE '%${year}%' and created_at LIKE '%${month}%'
+                  and userId = ${userIdx}`;
+    try {
+      const result = await pool.queryParam(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
 }
 

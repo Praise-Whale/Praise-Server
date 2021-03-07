@@ -64,63 +64,34 @@ module.exports = {
     const userIdx = req.userIdx;
     const { year, month } = req.params;
 
-    if (month == 0) { // 올해의 칭찬 카드 전체 조회
-      try {
-        const praiseCountResult = await sequelize.query(`
-        SELECT COUNT(id) as praiseCount
-        FROM praiseTarget
-        where created_at LIKE '%${year}%' and userId = ${userIdx}`);
+    try {
+      if (month === 0) {
+        const monthPraiseCount = await praise.userMonthPraiseCount(year, userIdx);
+        const whoalPraise = await praise.userWholePraise(year, userIdx);
 
-        const wholePraise = await sequelize.query(`
-        SELECT praisedName, created_at, today_praise
-        FROM praiseTarget
-        JOIN praise ON praiseTarget.praiseId = praise.id
-        where created_at LIKE '%${year}%' and userId = ${userIdx};
-        `);
-
-        const [{ praiseCount }] = praiseCountResult[0];
-        const collectionPraise = wholePraise[0];
-
-        res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
-          praiseCount,
+        return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
+          monthPraiseCount,
           collectionPraise
         }));
-        return;
-      } catch (err) {
-        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
-        return;
       }
-    }
-  else { // 연도, 월별 조회
-    try {
-      const praiseCountResult = await sequelize.query(`
-      SELECT COUNT(id) as praiseCount
-      FROM praiseTarget
-      where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
-      and userId = ${userIdx}`);
 
-      const yearMonthPraise = await sequelize.query(`
-      SELECT praisedName, created_at, today_praise
-      FROM praiseTarget
-      JOIN praise ON praiseTarget.praiseId = praise.id
-      Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
-      and userId = ${userIdx};
-      `);
-
-      const [{ praiseCount }] = praiseCountResult[0];
-      const collectionPraise = yearMonthPraise[0];
+      const yearPraiseCount = await praise.userYearPraiseCount(year, month, userIdx);
   
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_YEAR_MONTH_COLLECTION, {
+      const collectionPraise = await praise.userYearWhoalPraise(year, month, userIdx);
+
+      const praiseCount = yearPraiseCount[0].praiseCount;
+      
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
         praiseCount,
         collectionPraise
       }));
-      return;
+
     } catch (err) {
       res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
-      return;
+      return; 
     }
-  }
-},
+  },
+
   // 칭찬 랭킹
   praiseRanking: async (req, res) => {
     const userIdx = req.userIdx;
