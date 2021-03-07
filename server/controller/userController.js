@@ -78,7 +78,7 @@ module.exports = {
     }))
   },
 
-  userHome: async (req, res) => {
+  userPersonalHome: async (req, res) => {
     const userIdx = req.userIdx;
     
     const userHomeTap = await user.findAll({
