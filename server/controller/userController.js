@@ -155,13 +155,7 @@ module.exports = {
       return;
     }
 
-    const alarmUpdate = await user.update({
-      alarmCheck: alarmSet, 
-    }, {
-      where: {
-        id: userIdx
-      }
-    });
+    const alarmUpdate = await userService.alarmUpdate(userIdx);
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.ALARM_UPDATE_SUCCESS));
     return;

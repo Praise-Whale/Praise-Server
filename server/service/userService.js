@@ -56,5 +56,20 @@ module.exports = {
       console.log(err);
       throw err;
     }
+  },
+
+  alarmUpdate: async (userIdx) => {
+    try {
+      const updateAlarm = await user.update({
+        alarmCheck: alarmSet, 
+      }, {
+        where: {
+          id: userIdx
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
 }
