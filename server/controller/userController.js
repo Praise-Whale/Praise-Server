@@ -4,6 +4,7 @@ const util = require("../modules/util");
 const { user, praiseTarget } = require('../models/index');
 const jwt = require('../modules/jwt');
 const sequelize = require('sequelize');
+const userService = require('../service/userService');
 
 module.exports = {
   signup: async (req, res) => {
@@ -14,11 +15,7 @@ module.exports = {
       return;
     }
 
-    const nickNameCheck = await user.findOne({
-      where: {
-        nickName: nickName
-      }
-    });
+    const nickNameCheck = await userService.nickNameCheck(nickName);
 
     if (nickNameCheck) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_NICKNAME));
