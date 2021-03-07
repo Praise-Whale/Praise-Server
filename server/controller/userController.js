@@ -22,12 +22,7 @@ module.exports = {
       return;
     }
 
-    const userResult = await user.create({
-      nickName: nickName,
-      whaleName: whaleName,
-      userLevel: 0,
-      alarmCheck: true
-    });
+    const userResult = await userService.signUp(nickName, whaleName);
 
     const { id } = userResult;
 
