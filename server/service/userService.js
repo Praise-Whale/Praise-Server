@@ -28,5 +28,18 @@ module.exports = {
       console.log(err);
       throw err;
     }
+  },
+
+  signIn: async (nickName) => {
+    try {
+      const userSignIn = await user.findOne({
+        where: {
+          nickName: nickName
+        }
+      });
+      return userSignIn;
+    } catch (err) {
+      throw err;
+    }
   }
 }
