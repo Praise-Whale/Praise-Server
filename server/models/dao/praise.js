@@ -23,7 +23,7 @@ const test = {
     }
   },
 
-  userMonthPraiseCount: async (year, userIdx) => {
+  userWholePraiseCount: async (year, userIdx) => {
     const query = `SELECT COUNT(id) as praiseCount FROM praiseTarget where created_at LIKE '%${year}%' and userId = ${userIdx}`;
     try {
       const result = await pool.queryParam(query);
@@ -34,7 +34,7 @@ const test = {
     }
   }, 
 
-  userYearPraiseCount: async (year, month, userIdx) => {
+  userYearMonthPraiseCount: async (year, month, userIdx) => {
     const query = ` SELECT COUNT(id) as praiseCount FROM praiseTarget where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%' and userId = ${userIdx}`;
     try {
       const result = await pool.queryParam(query);
@@ -57,7 +57,7 @@ const test = {
     }
   }, 
 
-  userYearWholePraise: async (year, month, userIdx) => {
+  userYearMonthPraise: async (year, month, userIdx) => {
     const query = `SELECT praisedName, created_at, today_praise FROM praiseTarget
                   JOIN praise ON praiseTarget.praiseId = praise.id
                   Where created_at LIKE '%${year}%' and created_at LIKE '%-${month}-%'
