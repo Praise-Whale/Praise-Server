@@ -11,7 +11,7 @@ module.exports = {
           pool.release;
           resolve(result);
         } catch (err) {
-          poolPromise.release(connection);
+          pool.release;
           reject(err);
         }
       } catch (err) {
