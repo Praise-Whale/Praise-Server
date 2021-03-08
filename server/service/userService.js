@@ -1,4 +1,5 @@
-const { user } = require('../models/index');
+const { user, praiseTarget } = require('../models/index');
+const sequelize = require('sequelize');
 
 module.exports = {
   nickNameCheck: async (nickName) => {
@@ -67,6 +68,26 @@ module.exports = {
           id: userIdx
         }
       });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  },
+
+  userHomeTap: async (userIdx) => {
+    try {
+      const userHome = await user.findAll({
+        group: 'users.id',
+        attributes: ['nickName', 'whaleName', 'userLevel', [sequelize.fn('COUNT', sequelize.col('praiseTargets.id')), 'praiseCount']],
+        where: {
+          id: userIdx
+        },
+        include: [{
+          model: praiseTarget,
+          attributes: []
+        }]
+      });
+      return userHome;
     } catch (err) {
       console.log(err);
       throw err;

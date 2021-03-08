@@ -3,7 +3,6 @@ const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
 const { user, praiseTarget } = require('../models/index');
 const jwt = require('../modules/jwt');
-const sequelize = require('sequelize');
 const userService = require('../service/userService');
 
 module.exports = {
@@ -81,17 +80,7 @@ module.exports = {
   userPersonalHome: async (req, res) => {
     const userIdx = req.userIdx;
     
-    const userHomeTap = await user.findAll({
-      group: 'users.id',
-      attributes: ['nickName', 'whaleName', 'userLevel', [sequelize.fn('COUNT', sequelize.col('praiseTargets.id')), 'praiseCount']],
-      where: {
-        id: userIdx
-      },
-      include: [{
-        model: praiseTarget,
-        attributes: []
-      }]
-    });
+    const userHomeTap = await userService.userHomeTap(userIdx);
 
     const { nickName, whaleName, userLevel, praiseCount } = userHomeTap[0].dataValues;
     
