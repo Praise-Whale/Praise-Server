@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define('praise', {
     //모델의 Attributes (Column)을 정의하는곳
     today_praise: {
-      type: DataTypes.TEXT(),
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     praise_description: {
-      type: DataTypes.TEXT(),
+      type: DataTypes.TEXT,
       allowNull: false,
     }
   }, {
