@@ -1,8 +1,10 @@
-const statusCode = require('../modules/statusCode');
-const responseMessage = require('../modules/responseMessage');
-const util = require('../modules/util');
-const praise = require('../models/dao/praise');
-const { praiseTarget, isPraised, sequelize } = require('../models/index');
+const statusCode = require("../modules/statusCode");
+const responseMessage = require("../modules/responseMessage");
+const util = require("../modules/util");
+const praise = require("../models/dao/praise");
+const { praiseTarget, isPraised, sequelize } = require("../models/index");
+const userService = require("../service/userService");
+const praiseService = require("../service/praiseService");
 
 module.exports = {
   // 칭찬한 사람 등록
@@ -12,7 +14,9 @@ module.exports = {
     const { praiseId } = req.params;
 
     if (!praisedName || !praiseId) {
-      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
 
@@ -22,28 +26,46 @@ module.exports = {
       praisedName: praisedName,
       praiseId: praiseId,
       userId: userIdx,
-      created_at: created_at
+      created_at: created_at,
     });
-    
+
     const toastMsgResult = await praiseTarget.findAll({
-      attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'toastCount']],
+      attributes: [
+        [sequelize.fn("COUNT", sequelize.col("praiseTarget.id")), "toastCount"],
+      ],
       where: {
-        userId: userIdx
-      } 
+        userId: userIdx,
+      },
     });
 
     const { toastCount } = toastMsgResult[0].dataValues;
 
-    levelCheck = false;
+    let levelCheck = false;
 
-    if (toastCount == 5 || toastCount == 10 || toastCount == 30 || toastCount == 50 || toastCount == 100) {
-      levelCheck = true;
+    switch (toastCount) {
+      case 5:
+        levelCheck = await praiseService.userLevelUp(userIdx, 1);
+        break;
+      case 10:
+        levelCheck = await praiseService.userLevelUp(userIdx, 2);
+        break;
+      case 30:
+        levelCheck = await praiseService.userLevelUp(userIdx, 3);
+        break;
+      case 50:
+        levelCheck = await praiseService.userLevelUp(userIdx, 4);
+        break;
+      case 100:
+        levelCheck = await praiseService.userLevelUp(userIdx, 5);
+        break;
     }
 
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISERUP_SUCCESS, {
-      toastCount,
-      levelCheck
-    }));
+    res.status(statusCode.OK).send(
+      util.success(statusCode.OK, responseMessage.PRAISERUP_SUCCESS, {
+        toastCount,
+        levelCheck,
+      })
+    );
   },
   // 최근 칭찬 3명 유저 조회
   latelyParaiseUsers: async (req, res) => {
@@ -51,11 +73,26 @@ module.exports = {
 
     try {
       const praiseUsers = await praise.latelyPraiseUsers(userIdx);
-  
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LATELY_PRAISE_USER, praiseUsers));
+
+      res
+        .status(statusCode.OK)
+        .send(
+          util.success(
+            statusCode.OK,
+            responseMessage.LATELY_PRAISE_USER,
+            praiseUsers
+          )
+        );
       return;
     } catch (err) {
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+      res
+        .status(statusCode.INTERNAL_SERVER_ERROR)
+        .send(
+          util.fail(
+            statusCode.INTERNAL_SERVER_ERROR,
+            responseMessage.INTERNAL_SERVER_ERROR
+          )
+        );
       return;
     }
   },
@@ -70,26 +107,39 @@ module.exports = {
         const praiseCount = wholePraiseCount[0].praiseCount;
         const wholePraise = await praise.userWholePraise(year, userIdx);
 
-        return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
-          praiseCount,
-          wholePraise
-        }));
+        return res.status(statusCode.OK).send(
+          util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
+            praiseCount,
+            wholePraise,
+          })
+        );
       }
 
-      else {
-        const yearMonthPraiseCount = await praise.userYearMonthPraiseCount(year, month, userIdx);
-        const praiseCount = yearMonthPraiseCount[0].praiseCount;
-        const collectionPraise = await praise.userYearMonthPraise(year, month, userIdx);
-        
-        return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_YEAR_MONTH_COLLECTION, {
-          praiseCount,
-          collectionPraise
-        }));
-      }
+      const yearMonthPraiseCount = await praise.userYearMonthPraiseCount(year, month, userIdx);
 
+      const praiseCount = yearMonthPraiseCount[0].praiseCount;
+      const collectionPraise = await praise.userYearMonthPraise(year, month, userIdx);
+
+      return res.status(statusCode.OK).send(
+        util.success(
+          statusCode.OK,
+          responseMessage.PRAISE_YEAR_MONTH_COLLECTION,
+          {
+            praiseCount,
+            collectionPraise,
+          }
+        )
+      );
     } catch (err) {
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
-      return; 
+      res
+        .status(statusCode.INTERNAL_SERVER_ERROR)
+        .send(
+          util.fail(
+            statusCode.INTERNAL_SERVER_ERROR,
+            responseMessage.INTERNAL_SERVER_ERROR
+          )
+        );
+      return;
     }
   },
 
@@ -99,27 +149,42 @@ module.exports = {
 
     try {
       const praiseCountResult = await praise.userRanking(userIdx);
-  
+
       const totalPraiserCount = praiseCountResult[0].praiseCount;
 
       const rankingCountResult = await praiseTarget.findAll({
-        attributes: ['praisedName', [sequelize.fn('COUNT', sequelize.col('praiseTarget.praisedName')), 'praiserCount']],
+        attributes: [
+          "praisedName",
+          [
+            sequelize.fn("COUNT", sequelize.col("praiseTarget.praisedName")),
+            "praiserCount",
+          ],
+        ],
         where: {
-          userId: userIdx
+          userId: userIdx,
         },
-        group: ['praiseTarget.praisedName'],
+        group: ["praiseTarget.praisedName"],
         raw: true,
-        order: sequelize.literal('praiserCount DESC'),
+        order: sequelize.literal("praiserCount DESC"),
         limit: 5,
       });
-  
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.PRAISE_RANKING_SUCCESS, {
-        totalPraiserCount,
-        rankingCountResult
-      }));
+
+      res.status(statusCode.OK).send(
+        util.success(statusCode.OK, responseMessage.PRAISE_RANKING_SUCCESS, {
+          totalPraiserCount,
+          rankingCountResult,
+        })
+      );
       return;
     } catch (err) {
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+      res
+        .status(statusCode.INTERNAL_SERVER_ERROR)
+        .send(
+          util.fail(
+            statusCode.INTERNAL_SERVER_ERROR,
+            responseMessage.INTERNAL_SERVER_ERROR
+          )
+        );
       return;
     }
   },
@@ -129,7 +194,9 @@ module.exports = {
     const { praisedName } = req.query;
 
     if (!praisedName) {
-      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
 
@@ -151,13 +218,22 @@ module.exports = {
 
       const collectionPraise = targetPraise[0];
 
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.EACH_PRAISE_SUCCESS, {
-        praiseCount,
-        collectionPraise
-      }));
+      res.status(statusCode.OK).send(
+        util.success(statusCode.OK, responseMessage.EACH_PRAISE_SUCCESS, {
+          praiseCount,
+          collectionPraise,
+        })
+      );
     } catch (err) {
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+      res
+        .status(statusCode.INTERNAL_SERVER_ERROR)
+        .send(
+          util.fail(
+            statusCode.INTERNAL_SERVER_ERROR,
+            responseMessage.INTERNAL_SERVER_ERROR
+          )
+        );
       return;
     }
-  }
-}
+  },
+};
