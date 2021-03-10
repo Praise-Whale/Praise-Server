@@ -44,6 +44,18 @@ const test = {
       throw err;
     }
   },
+
+  userFirstPraise: async (userIdx) => {
+    const query = `SELECT created_at FROM praiseTarget
+                  where userId = ${userIdx}`;
+    try {
+      const result = await pool.queryParam(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  },
   
   userWholePraise: async (year, userIdx) => {
     const query = `SELECT praisedName, created_at, today_praise FROM praiseTarget 
