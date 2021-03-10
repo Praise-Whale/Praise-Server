@@ -40,6 +40,8 @@ module.exports = {
 
     const { toastCount } = toastMsgResult[0].dataValues;
 
+    console.log(toastCount);
+
     let levelCheck = false;
 
     switch (toastCount) {
@@ -105,16 +107,17 @@ module.exports = {
       if (month == 0) {
         const wholePraiseCount = await praise.userWholePraiseCount(year, userIdx);
         const praiseCount = wholePraiseCount[0].praiseCount;
-        const wholePraise = await praise.userWholePraise(year, userIdx);
+        const collectionPraise = await praise.userWholePraise(year, userIdx);
 
         return res.status(statusCode.OK).send(
           util.success(statusCode.OK, responseMessage.PRAISE_ALL_COLLECTION, {
             praiseCount,
-            wholePraise,
+            collectionPraise,
           })
         );
       }
 
+      console.log(year + " " + month + " " + userIdx);
       const yearMonthPraiseCount = await praise.userYearMonthPraiseCount(year, month, userIdx);
 
       const praiseCount = yearMonthPraiseCount[0].praiseCount;

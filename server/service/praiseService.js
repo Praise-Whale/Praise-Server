@@ -15,5 +15,14 @@ module.exports = {
       console.log(err);
       throw err;
     }
-  } 
+  },
+  
+  praiseAdd: async (praisedName, praiseId, userIdx, created_at) => {
+    try {
+      
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }
