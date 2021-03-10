@@ -8,10 +8,10 @@ module.exports = {
         const connection = await pool.getConnection();
         try {
           const result = await connection.query(query);
-          pool.release;
+          pool.releaseConnection(connection);
           resolve(result);
         } catch (err) {
-          pool.release;
+          pool.releaseConnection(connection);
           reject(err);
         }
       } catch (err) {
@@ -26,10 +26,10 @@ module.exports = {
         const connection = await pool.getConnection();
         try {
           const result = await connection.query(query, value);
-          pool.release;
+          pool.releaseConnection(connection);
           resolve(result);
         } catch (err) {
-          pool.release;
+          pool.releaseConnection(connection);
           reject(err);
         }
       } catch (err) {
@@ -46,11 +46,11 @@ module.exports = {
           await connection.beginTransaction();
           args.forEach(async (it) => await it(connection));
           await connection.commit();
-          pool.release;
+          pool.releaseConnection(connection);
           resolve(result);
         } catch (err) {
           await connection.rollback();
-          pool.release;
+          pool.releaseConnection(connection);
           reject(err);
         }
       } catch (err) {

@@ -40,7 +40,6 @@ module.exports = {
 
     const { toastCount } = toastMsgResult[0].dataValues;
 
-    console.log(toastCount);
 
     let levelCheck = false;
 
@@ -117,7 +116,6 @@ module.exports = {
         );
       }
 
-      console.log(year + " " + month + " " + userIdx);
       const yearMonthPraiseCount = await praise.userYearMonthPraiseCount(year, month, userIdx);
 
       const praiseCount = yearMonthPraiseCount[0].praiseCount;
