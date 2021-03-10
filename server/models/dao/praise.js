@@ -13,7 +13,7 @@ const test = {
   },
 
   latelyPraiseUsers: async (userIdx) => {
-    const query = `SELECT distinct praisedName FROM praiseTarget WHERE userId = ${userIdx} LIMIT 3`;
+    const query = `SELECT distinct praisedName FROM praiseTarget WHERE userId = ${userIdx} ORDER BY id DESC LIMIT 3`;
     try {
       const result = await pool.queryParam(query);
       return result;
