@@ -223,7 +223,8 @@ module.exports = {
       SELECT praisedName, created_at, today_praise
       FROM praiseTarget
       JOIN praise ON praiseTarget.praiseId = praise.id
-      where praisedName = '${praisedName}' and userId = ${userIdx};
+      where praisedName = '${praisedName}' and userId = ${userIdx}
+      ORDER BY created_at DESC;
       `);
 
       const collectionPraise = targetPraise[0];
