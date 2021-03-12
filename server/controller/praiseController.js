@@ -5,15 +5,12 @@ const praise = require("../models/dao/praise");
 const { praiseTarget, isPraised, sequelize } = require("../models/index");
 const userService = require("../service/userService");
 const praiseService = require("../service/praiseService");
-const moment = require('moment');
-require('moment-timezone');
-moment.tz.setDefault("Asia/Seoul");
 
 module.exports = {
   // 칭찬한 사람 등록
   praiserUp: async (req, res) => {
     const userIdx = req.userIdx;
-    const { praisedName } = req.body;
+    const { praisedName, created_at } = req.body;
     const { praiseId } = req.params;
 
     if (!praisedName || !praiseId) {
@@ -22,9 +19,6 @@ module.exports = {
         .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
-
-    const created_at = moment().format('YYYY-MM-DD HH:mm:ss');
-    console.log(created_at);
 
     await praiseTarget.create({
       praisedName: praisedName,
