@@ -7,7 +7,7 @@ const jwtMiddlewares = require('../middlewares/middlewares');
 router.post('/signup', userController.signup);
 router.post('/signin', userController.signin);
 router.get('/home', jwtMiddlewares.userJwt, userController.userPersonalHome);
-router.post('/alarm', jwtMiddlewares.userJwt, userController.alaramCheck);
+router.put('/alarm', jwtMiddlewares.userJwt, userController.alaramCheck);
 router.get('/check/:nickName', userController.nickNameCheck);
 router.put('/nickname', jwtMiddlewares.userJwt, userController.nickNameChange);
 router.put('/refreshtoken', jwtMiddlewares.refreshToken);

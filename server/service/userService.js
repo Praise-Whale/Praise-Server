@@ -61,10 +61,11 @@ module.exports = {
     }
   },
 
-  alarmUpdate: async (userIdx) => {
+  alarmUpdate: async (userIdx, alarmSet, alarmTime) => {
     try {
       const updateAlarm = await user.update({
-        alarmCheck: alarmSet, 
+        alarmCheck: alarmSet,
+        alarmTime: alarmTime 
       }, {
         where: {
           id: userIdx

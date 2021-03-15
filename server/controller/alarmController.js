@@ -9,7 +9,6 @@ const alarm = {
     try {
       admin.initializeApp({
         credential: admin.credential.cert(firebaseConfig),
-        //databaseURL: "https://whale-6603f.firebaseio.com",
       });
 
       var payload = {
@@ -21,7 +20,7 @@ const alarm = {
 
       const test = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxNDksImlhdCI6MTYxNTgxMjQ1OCwiZXhwIjoxNjE4NDA0NDU4LCJpc3MiOiJwcmFpc2UifQ.iUAhRGG-sUD_-Hyn6XZ7IuYv9RoHvfXhd9pkzVwhKyI"
       const result = [
-        "f1f5Ti-yTkOwPI1xtcj92R:APA91bF53uesY1OufwWlFbjQo-6C2PIMrkMFW6rwyvcu3I3TlNlfBhHyOr2s-HPzKZ7oFKja_7IrQ1BTOv0KVX_dRrMOsL4zF-fDxvanhDJdtFg5GQqQbsmMS5Celo5W2dWMBUOu6nva"  
+        "f2ozcBlWR0iAL6BqNeXVhA:APA91bFfdrDPU92-gJoCX-"  
       ];
 
       admin
