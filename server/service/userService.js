@@ -16,12 +16,13 @@ module.exports = {
     }
   },
 
-  signUp: async (nickName, whaleName) => {
+  signUp: async (nickName, whaleName, deviceToken) => {
     try {
       const userSignUp = await user.create({
         nickName: nickName,
-        whaleName: whaleName,
         userLevel: 0,
+        whaleName: whaleName,
+        deviceToken: deviceToken,
         alarmCheck: true
       });
       return userSignUp;

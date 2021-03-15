@@ -7,9 +7,9 @@ const userService = require('../service/userService');
 
 module.exports = {
   signup: async (req, res) => {
-    const { nickName, whaleName } = req.body;
+    const { nickName, whaleName, deviceToken } = req.body;
 
-    if (!nickName || !whaleName) {
+    if (!nickName || !whaleName || !deviceToken) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
@@ -21,7 +21,7 @@ module.exports = {
       return;
     }
 
-    const userResult = await userService.signUp(nickName, whaleName);
+    const userResult = await userService.signUp(nickName, whaleName, deviceToken);
 
     const { id } = userResult;
 
