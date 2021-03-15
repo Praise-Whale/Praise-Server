@@ -5,35 +5,28 @@ const statusCode = require("../modules/statusCode");
 const resMessage = require("../modules/responseMessage");
 
 const alarm = {
-
   alarm: async (req, res) => {
-
     try {
-      if (!admin.apps.length) {
-        admin.initializeApp({
-          credential: admin.credential.cert(firebaseConfig),
-          //databaseURL: "https://maru-40810.firebaseio.com",
-        });
-      }
-      var options = {
-        priority: "high",
-        timeToLive: 60 * 60 * 24 * 2,
-      };
+      admin.initializeApp({
+        credential: admin.credential.cert(firebaseConfig),
+        //databaseURL: "https://whale-6603f.firebaseio.com",
+      });
 
       var payload = {
-        notification: {
-          title: "연애고수는 누구?",
-          body: "영민이형",
+        data: {
+          title: "오늘의 칭찬이 도착했어요!",
+          body: "지금 바로 오늘의 칭찬을 확인하고, 실천해보세요!",
         },
       };
-      
+
+      const test = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxNDksImlhdCI6MTYxNTgxMjQ1OCwiZXhwIjoxNjE4NDA0NDU4LCJpc3MiOiJwcmFpc2UifQ.iUAhRGG-sUD_-Hyn6XZ7IuYv9RoHvfXhd9pkzVwhKyI"
       const result = [
-        "eB2sWawMQ_2-A8thR2eNyd:APA91bHtaT1fFkqYnmWepU52NL7HT5MIkAfZR-2bHiNc240z6YH5AnI-FdKLU-Ox_fT4RQpSSdIex1vFCK9CLgKdvoEvbXfbDrxxGNvUgbi1w_0D51hYot1cyfv_sGiOvwWKYijoLihT",
-      ]
+        "f1f5Ti-yTkOwPI1xtcj92R:APA91bF53uesY1OufwWlFbjQo-6C2PIMrkMFW6rwyvcu3I3TlNlfBhHyOr2s-HPzKZ7oFKja_7IrQ1BTOv0KVX_dRrMOsL4zF-fDxvanhDJdtFg5GQqQbsmMS5Celo5W2dWMBUOu6nva"  
+      ];
 
       admin
         .messaging()
-        .sendToDevice(result, payload, options)
+        .sendToDevice(result, payload)
         .then(function (response) {
           console.log("성공 메세지!" + response);
           res
@@ -44,16 +37,24 @@ const alarm = {
         .catch(function (error) {
           console.log("보내기 실패 : ", error);
           res
-            .status(statusCode.DB_ERROR)
+            .status(statusCode.INTERNAL_SERVER_ERROR)
             .send(
-              util.fail(statusCode.DB_ERROR, resMessage.INTERNAL_SERVER_ERROR)
+              util.fail(
+                statusCode.INTERNAL_SERVER_ERROR,
+                resMessage.INTERNAL_SERVER_ERROR
+              )
             );
           return;
         });
     } catch (err) {
       res
-        .status(statusCode.DB_ERROR)
-        .send(util.fail(statusCode.DB_ERROR, resMessage.INTERNAL_SERVER_ERROR));
+        .status(statusCode.INTERNAL_SERVER_ERROR)
+        .send(
+          util.fail(
+            statusCode.INTERNAL_SERVER_ERROR,
+            resMessage.INTERNAL_SERVER_ERROR
+          )
+        );
       return;
     }
   },
