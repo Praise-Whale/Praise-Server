@@ -23,7 +23,8 @@ module.exports = {
         userLevel: 0,
         whaleName: whaleName,
         deviceToken: deviceToken,
-        alarmCheck: true
+        alarmCheck: true,
+        alarmTime: "9:00",
       });
       return userSignUp;
     } catch (err) {

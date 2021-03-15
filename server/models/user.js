@@ -16,11 +16,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(200),
       allowNull: true
     },
+    deviceToken: {
+      type: DataTypes.STRING(200),
+      allowNull: true,
+    },
     alarmCheck: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true
     },
+    alarmTime: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      defaultValue: "9:00"
+    }
   }, {
     freezeTableName: true,
     timestamps: false,
