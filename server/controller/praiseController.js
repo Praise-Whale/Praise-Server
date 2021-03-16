@@ -200,11 +200,11 @@ module.exports = {
     try {
       const rankingCountResult = await praise.userRankingCount(praisedName, userIdx);
 
-      const [{ praiseCount }] = rankingCountResult[0];
+      const { praiseCount } = rankingCountResult[0];
 
       const targetPraise = await praise.userTargetPraise(praisedName, userIdx);
 
-      const collectionPraise = targetPraise[0];
+      const collectionPraise = targetPraise;
 
       res.status(statusCode.OK).send(
         util.success(statusCode.OK, responseMessage.EACH_PRAISE_SUCCESS, {
