@@ -1,4 +1,4 @@
-const { user, praise, praiseTarget } = require('../models/index');
+const { praise } = require('../models/index');
 
 
 module.exports = {

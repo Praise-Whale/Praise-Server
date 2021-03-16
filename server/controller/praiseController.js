@@ -2,8 +2,7 @@ const statusCode = require("../modules/statusCode");
 const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
 const praise = require("../models/dao/praise");
-const { praiseTarget, isPraised, sequelize } = require("../models/index");
-const userService = require("../service/userService");
+const { praiseTarget, sequelize } = require("../models/index");
 const praiseService = require("../service/praiseService");
 
 module.exports = {
@@ -20,12 +19,7 @@ module.exports = {
       return;
     }
 
-    await praiseTarget.create({
-      praisedName: praisedName,
-      praiseId: praiseId,
-      userId: userIdx,
-      created_at: created_at,
-    });
+    await praiseService.praiseAdd(praisedName, praiseId, userIdx, created_at);
 
     const toastMsgResult = await praiseTarget.findAll({
       attributes: [
@@ -41,6 +35,7 @@ module.exports = {
 
     let levelCheck = false;
 
+    // 리팩터링 해보기
     switch (toastCount) {
       case 5:
         levelCheck = await praiseService.userLevelUp(userIdx, 1);

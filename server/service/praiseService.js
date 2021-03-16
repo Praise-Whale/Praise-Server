@@ -1,4 +1,4 @@
-const { user } = require('../models/index');
+const { user, praiseTarget } = require('../models/index');
 
 module.exports = {
   userLevelUp: async (userIdx, updateUserLevel) => {
@@ -19,7 +19,12 @@ module.exports = {
   
   praiseAdd: async (praisedName, praiseId, userIdx, created_at) => {
     try {
-      
+      const praiseInsert = await praiseTarget.create({
+        praisedName: praisedName,
+        praiseId: praiseId,
+        userId: userIdx,
+        created_at: created_at,
+      });
     } catch (err) {
       console.log(err);
       throw err;

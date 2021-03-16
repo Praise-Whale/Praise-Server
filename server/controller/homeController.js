@@ -1,8 +1,7 @@
 const statusCode = require("../modules/statusCode");
 const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
-const { user, praise, praiseTarget } = require('../models/index');
-const sequelize = require('sequelize');
+const { praise } = require('../models/index');
 const homeService = require("../service/homeService");
 
 module.exports = {
