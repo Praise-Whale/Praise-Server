@@ -1,9 +1,59 @@
+const admin = require("firebase-admin");
+const firebaseConfig = require("../config/firebase.json");
 const statusCode = require("../modules/statusCode");
 const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
 const praise = require("../models/dao/praise");
+const users = require('../models/dao/user');
 const { praiseTarget, sequelize } = require("../models/index");
 const praiseService = require("../service/praiseService");
+const schedule = require("node-schedule");
+
+const rule = new schedule.RecurrenceRule();
+
+rule.tz = "Asia/Seoul";
+
+rule.hour = 22; // rule로 하면 뭔가 잘 안됨... 시간을 서울로 안맞춰서 그런가
+rule.minute = 36;
+rule.second = 45;
+
+const sch = schedule.scheduleJob(rule, async () => {
+  try {
+    admin.initializeApp({
+      credential: admin.credential.cert(firebaseConfig),
+    });
+
+    var payload = {
+      data: {
+        title: "오늘의 칭찬이 도착했어요!",
+        body: "지금 바로 오늘의 칭찬을 확인하고, 실천해보세요!",
+      },
+    };
+
+    const userAllDeviceTokens = await users.userAllDeviceToken();
+
+    // 현재 deviceToken 이 null이 존재해서 방어 로직
+    const result = [];
+    for (let i = 0; i < userAllDeviceTokens.length; ++i) {
+      if (userAllDeviceTokens[i].deviceToken != null) {
+        result.push(userAllDeviceTokens[i].deviceToken);
+      }
+    }
+    
+    admin
+      .messaging()
+      .sendToDevice(result, payload)
+      .then(function (response) {
+        console.log("성공 메세지!" + response);
+      })
+      .catch(function (error) {
+        console.log("보내기 실패 : ", error);
+      });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 
 module.exports = {
   // 칭찬한 사람 등록

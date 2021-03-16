@@ -1,6 +1,6 @@
 const pool = require('../../modules/pool');
 
-const test = {
+const praisePool = {
   totalRankingCount: async (userIdx) => {
     const query = `SELECT COUNT(DISTINCT praisedName) as praiseCount FROM praiseTarget WHERE userId = ${userIdx}`;
     try {
@@ -101,4 +101,4 @@ const test = {
   }
 }
 
-module.exports = test;
+module.exports = praisePool;
