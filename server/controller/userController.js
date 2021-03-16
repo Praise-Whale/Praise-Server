@@ -90,6 +90,7 @@ module.exports = {
       praiseCount: praiseCount
     }
 
+    // 리팩터링 해보기 -> 이것도 모듈로 뺄까
     switch(userLevel) {
       case 0:
         homeTapInfo.levelUpNeedCount = 5;

@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     deviceToken: {
       type: DataTypes.STRING(200),
-      allowNull: true,
+      allowNull: false,
     },
     alarmCheck: {
       type: DataTypes.BOOLEAN,
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     alarmTime: {
       type: DataTypes.STRING(100),
-      allowNull: true,
+      allowNull: false,
       defaultValue: "9:00"
     }
   }, {

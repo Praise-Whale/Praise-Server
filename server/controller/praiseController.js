@@ -85,7 +85,7 @@ module.exports = {
 
     let levelCheck = false;
 
-    // 리팩터링 해보기
+    // 리팩터링 해보기 -> module 로 빼놓을까 흠
     switch (toastCount) {
       case 5:
         levelCheck = await praiseService.userLevelUp(userIdx, 1);
