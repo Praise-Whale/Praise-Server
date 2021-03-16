@@ -3,11 +3,11 @@ const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
 const { user, praise, praiseTarget } = require('../models/index');
 const sequelize = require('sequelize');
+const homeService = require("../service/homeService");
 
 module.exports = {
   // 홈 화면
   praiseHome: async (req, res) => {
-    const userIdx = req.userIdx;
     let { praiseId } = req.params;
 
     if (praiseId === undefined) {
@@ -22,33 +22,13 @@ module.exports = {
         praiseId = praiseId - maxPraiseId;
       }
 
-      const praiseMainHome = await praiseTarget.findAll({
-        attributes: [[sequelize.fn('COUNT', sequelize.col('praiseTarget.id')), 'praiseCount']],
-        include: [{
-        model: user,
-          attributes: ['nickName'],
-          where: {
-            id: userIdx
-          }
-        }],
-      });
+      const homePraise = await homeService.homePraise(praiseId);
 
-
-      const homePraise = await praise.findOne({
-        attributes: ['id', 'today_praise', 'praise_description'],
-        where: {
-          id: praiseId
-        },
-      });
-
-
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, {
         homePraise
       }));
-      return;
     } catch (err) {
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
-      return;
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   }
 }
