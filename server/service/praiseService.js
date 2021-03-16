@@ -1,4 +1,4 @@
-const { user, praiseTarget } = require('../models/index');
+const { user, praiseTarget, sequelize } = require('../models/index');
 
 module.exports = {
   userLevelUp: async (userIdx, updateUserLevel) => {
@@ -25,6 +25,31 @@ module.exports = {
         userId: userIdx,
         created_at: created_at,
       });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  },
+
+  praiseRankingResult: async (userIdx) => {
+    try {
+      const rankingResult = await praiseTarget.findAll({
+        attributes: [
+          "praisedName",
+          [
+            sequelize.fn("COUNT", sequelize.col("praiseTarget.praisedName")),
+            "praiserCount",
+          ],
+        ],
+        where: {
+          userId: userIdx,
+        },
+        group: ["praiseTarget.praisedName"],
+        raw: true,
+        order: sequelize.literal("praiserCount DESC"),
+        limit: 5,
+      });
+      return rankingResult;
     } catch (err) {
       console.log(err);
       throw err;

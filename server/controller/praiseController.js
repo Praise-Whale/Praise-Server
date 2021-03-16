@@ -101,9 +101,11 @@ module.exports = {
         const praiseCount = wholePraiseCount[0].praiseCount;
 
         const firstPraise = await praise.userFirstPraise(userIdx);
+
         if (firstPraise.length == 0) {
           return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
         }
+
         const firstDate = firstPraise[0];
 
         const collectionPraise = await praise.userWholePraise(year, userIdx);
@@ -121,9 +123,11 @@ module.exports = {
       const praiseCount = yearMonthPraiseCount[0].praiseCount;
 
       const firstPraise = await praise.userFirstPraise(userIdx);
+      
       if (firstPraise.length == 0) {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       }
+
       const firstDate = firstPraise[0];
       
       const collectionPraise = await praise.userYearMonthPraise(year, month, userIdx);
@@ -161,22 +165,7 @@ module.exports = {
 
       const totalPraiserCount = praiseCountResult[0].praiseCount;
 
-      const rankingCountResult = await praiseTarget.findAll({
-        attributes: [
-          "praisedName",
-          [
-            sequelize.fn("COUNT", sequelize.col("praiseTarget.praisedName")),
-            "praiserCount",
-          ],
-        ],
-        where: {
-          userId: userIdx,
-        },
-        group: ["praiseTarget.praisedName"],
-        raw: true,
-        order: sequelize.literal("praiserCount DESC"),
-        limit: 5,
-      });
+      const rankingCountResult = await praiseService.praiseRankingResult(userIdx);
 
       res.status(statusCode.OK).send(
         util.success(statusCode.OK, responseMessage.PRAISE_RANKING_SUCCESS, {
