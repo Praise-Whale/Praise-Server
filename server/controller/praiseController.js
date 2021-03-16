@@ -13,7 +13,7 @@ const rule = new schedule.RecurrenceRule();
 
 rule.tz = "Asia/Seoul";
 
-rule.hour = 22; // rule로 하면 뭔가 잘 안됨... 시간을 서울로 안맞춰서 그런가
+rule.hour = 22;
 rule.minute = 36;
 rule.second = 45;
 
