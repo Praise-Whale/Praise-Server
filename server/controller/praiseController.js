@@ -155,13 +155,12 @@ module.exports = {
       return;
     }
   },
-
   // 칭찬 랭킹
   praiseRanking: async (req, res) => {
     const userIdx = req.userIdx;
 
     try {
-      const praiseCountResult = await praise.userRanking(userIdx);
+      const praiseCountResult = await praise.totalRankingCount(userIdx);
 
       const totalPraiserCount = praiseCountResult[0].praiseCount;
 
@@ -199,23 +198,13 @@ module.exports = {
     }
 
     try {
-      const rankingCountResult = await sequelize.query(`
-      SELECT COUNT(praisedName) as praiseCount
-      FROM praiseTarget
-      where praisedName = '${praisedName}' and userId = ${userIdx};
-      `);
+      const rankingCountResult = await praise.userRankingCount(praisedName, userIdx);
 
-      const [{ praiseCount }] = rankingCountResult[0];
+      const { praiseCount } = rankingCountResult[0];
 
-      const targetPraise = await sequelize.query(`
-      SELECT praisedName, created_at, today_praise
-      FROM praiseTarget
-      JOIN praise ON praiseTarget.praiseId = praise.id
-      where praisedName = '${praisedName}' and userId = ${userIdx}
-      ORDER BY created_at DESC;
-      `);
+      const targetPraise = await praise.userTargetPraise(praisedName, userIdx);
 
-      const collectionPraise = targetPraise[0];
+      const collectionPraise = targetPraise;
 
       res.status(statusCode.OK).send(
         util.success(statusCode.OK, responseMessage.EACH_PRAISE_SUCCESS, {
