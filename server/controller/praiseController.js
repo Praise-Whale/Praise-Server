@@ -186,8 +186,8 @@ module.exports = {
       return;
     }
   },
-  // 칭찬 대상별 칭찬 내역 부르기
-  eachTargetPraise: async (req, res) => {
+  // 칭찬 카드 조회
+  myPraiseCard: async (req, res) => {
     const userIdx = req.userIdx;
     const { praisedName } = req.query;
 
