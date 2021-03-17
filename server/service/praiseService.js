@@ -16,7 +16,6 @@ module.exports = {
       throw err;
     }
   },
-  
   praiseAdd: async (praisedName, praiseId, userIdx, created_at) => {
     try {
       const praiseInsert = await praiseTarget.create({
@@ -30,7 +29,6 @@ module.exports = {
       throw err;
     }
   },
-
   praiseRankingResult: async (userIdx) => {
     try {
       const rankingResult = await praiseTarget.findAll({

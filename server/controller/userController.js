@@ -31,7 +31,6 @@ module.exports = {
       refreshToken: refreshToken
     }))
   },
-
   nickNameCheck: async (req, res) => {
     const { nickName } = req.params;
 
@@ -50,7 +49,6 @@ module.exports = {
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.POSSIBLE_NICKNAME));
     return;
   },
-
   signin: async (req, res) => {
     const { nickName } = req.body;
 
@@ -75,7 +73,6 @@ module.exports = {
       refreshToken: refreshToken
     }))
   },
-
   userPersonalHome: async (req, res) => {
     const userIdx = req.userIdx;
     
@@ -112,7 +109,6 @@ module.exports = {
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, homeTapInfo));
     return;
   },
-
   nickNameChange: async (req, res) => {
     const { newNickName } = req.body;
     const userIdx = req.userIdx;
@@ -134,7 +130,6 @@ module.exports = {
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.NICKNAME_UPDATE_SUCCESS));
     return;
   },
-
   alaramCheck: async (req, res) => {
     const { alarmSet } = req.body;
     const userIdx = req.userIdx;
