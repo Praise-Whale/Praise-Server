@@ -14,7 +14,7 @@ const rule = new schedule.RecurrenceRule();
 rule.tz = "Asia/Seoul";
 
 rule.hour = 23;
-rule.minute = 15;
+rule.minute = 30;
 rule.second = 0;
 
 const sch = schedule.scheduleJob(rule, async () => {
