@@ -13,8 +13,8 @@ const rule = new schedule.RecurrenceRule();
 
 rule.tz = "Asia/Seoul";
 
-rule.hour = 23;
-rule.minute = 55;
+rule.hour = 9;
+rule.minute = 0;
 rule.second = 0;
 
 const sch = schedule.scheduleJob(rule, async () => {
