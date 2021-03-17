@@ -15,7 +15,6 @@ module.exports = {
       throw err;
     }
   },
-
   signUp: async (nickName, whaleName, deviceToken) => {
     try {
       const userSignUp = await user.create({
@@ -32,7 +31,6 @@ module.exports = {
       throw err;
     }
   },
-
   signIn: async (nickName) => {
     try {
       const userSignIn = await user.findOne({
@@ -45,7 +43,6 @@ module.exports = {
       throw err;
     }
   },
-
   nickNameChange: async (nickName, userIdx) => {
     try {
       const nickNameChange = await user.update({
@@ -60,7 +57,6 @@ module.exports = {
       throw err;
     }
   },
-
   alarmUpdate: async (userIdx, alarmSet) => {
     try {
       const updateAlarm = await user.update({
@@ -75,7 +71,6 @@ module.exports = {
       throw err;
     }
   },
-
   userHomeTap: async (userIdx) => {
     try {
       const userHome = await user.findAll({

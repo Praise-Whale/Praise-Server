@@ -55,7 +55,6 @@ const sch = schedule.scheduleJob(rule, async () => {
   }
 });
 
-
 module.exports = {
   // 칭찬한 사람 등록
   praiserUp: async (req, res) => {
@@ -82,7 +81,6 @@ module.exports = {
     });
 
     const { toastCount } = toastMsgResult[0].dataValues;
-
 
     let levelCheck = false;
 

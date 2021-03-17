@@ -1,6 +1,5 @@
 const { praise } = require('../models/index');
 
-
 module.exports = {
   homePraise: async (praiseId) => {
     try {
@@ -17,4 +16,3 @@ module.exports = {
     }
   }
 }
-
