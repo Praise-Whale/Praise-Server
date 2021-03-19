@@ -19,6 +19,7 @@ module.exports = {
   LATELY_PRAISE_USER: "최근 칭찬 유저 조회 성공입니다",
 
   // 칭찬 컬렉션 조회
+  NOT_FOUND_PRAISE: "칭찬한 이력이 없습니다",
   PRAISE_ALL_COLLECTION: "칭찬 컬렉션 전체 조회 성공입니다",
 
   // 칭찬 컬렉션 년,월별 조회
