@@ -13,7 +13,7 @@ const rule = new schedule.RecurrenceRule();
 
 rule.tz = "Asia/Seoul";
 
-rule.hour = 14;
+rule.hour = 9;
 rule.minute = 0;
 rule.second = 0;
 
