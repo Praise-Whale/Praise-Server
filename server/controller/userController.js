@@ -132,6 +132,7 @@ module.exports = {
   },
   alaramCheck: async (req, res) => {
     const { alarmSet } = req.body;
+    console.log(alarmSet);
     const userIdx = req.userIdx;
 
     if (alarmSet === undefined) {

@@ -13,9 +13,9 @@ const rule = new schedule.RecurrenceRule();
 
 rule.tz = "Asia/Seoul";
 
-rule.hour = 9;
-rule.minute = 0;
-rule.second = 0;
+rule.hour = 1;
+rule.minute = 10;
+rule.second = 5;
 
 const sch = schedule.scheduleJob(rule, async () => {
   try {
@@ -32,12 +32,9 @@ const sch = schedule.scheduleJob(rule, async () => {
 
     const userAllDeviceTokens = await users.userAllDeviceToken();
 
-    // 현재 deviceToken 이 null이 존재해서 방어 로직
     const result = [];
     for (let i = 0; i < userAllDeviceTokens.length; ++i) {
-      if (userAllDeviceTokens[i].deviceToken != '') {
-        result.push(userAllDeviceTokens[i].deviceToken);
-      }
+      result.push(userAllDeviceTokens[i].deviceToken);
     }
     
     admin
