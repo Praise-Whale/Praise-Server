@@ -13,9 +13,9 @@ const rule = new schedule.RecurrenceRule();
 
 rule.tz = "Asia/Seoul";
 
-rule.hour = 9;
-rule.minute = 0;
-rule.second = 0;
+rule.hour = 13;
+rule.minute = 14;
+rule.second = 5;
 
 const sch = schedule.scheduleJob(rule, async () => {
   try {
@@ -39,7 +39,6 @@ const sch = schedule.scheduleJob(rule, async () => {
         result.push(userAllDeviceTokens[i].deviceToken);
       }
     }
-    console.log(result);
     
     admin
       .messaging()
