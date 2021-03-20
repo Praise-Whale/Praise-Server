@@ -125,14 +125,13 @@ module.exports = {
       return;
     }
 
-    const userResult = await userService.nickNameChange(newNickName, userIdx);
+    await userService.nickNameChange(newNickName, userIdx);
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.NICKNAME_UPDATE_SUCCESS));
     return;
   },
   alaramCheck: async (req, res) => {
     const { alarmSet } = req.body;
-    console.log(alarmSet);
     const userIdx = req.userIdx;
 
     if (alarmSet === undefined) {
@@ -140,7 +139,7 @@ module.exports = {
       return;
     }
 
-    const alarmUpdate = await userService.alarmUpdate(userIdx, alarmSet);
+    await userService.alarmUpdate(userIdx, alarmSet);
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.ALARM_UPDATE_SUCCESS));
     return;
