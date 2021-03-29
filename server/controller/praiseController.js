@@ -36,6 +36,7 @@ const sch = schedule.scheduleJob(rule, async () => {
     for (let i = 0; i < userAllDeviceTokens.length; ++i) {
       result.push(userAllDeviceTokens[i].deviceToken);
     }
+    console.log(result);
     
     admin
       .messaging()
