@@ -19,9 +19,11 @@ rule.second = 0;
 
 const sch = schedule.scheduleJob(rule, async () => {
   try {
-    admin.initializeApp({
-      credential: admin.credential.cert(firebaseConfig),
-    });
+    if (!admin.apps.length) {
+      admin.initializeApp({
+        credential: admin.credential.cert(firebaseConfig),
+      });
+    }
 
     var payload = {
       data: {
@@ -34,7 +36,7 @@ const sch = schedule.scheduleJob(rule, async () => {
 
     const result = [];
     for (let i = 0; i < userAllDeviceTokens.length; ++i) {
-      result.push(userAllDeviceTokens[i].deviceToken);
+      result.push(userAllDeviceTokens[i].deviceToken)
     }
     
     admin
