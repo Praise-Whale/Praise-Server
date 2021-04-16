@@ -18,7 +18,6 @@ script:
   - cd server
   - npm start
   
-
 before_deploy:
   - rm -rf node_modules 
   - mkdir -p before-deploy # zip에 포함시킬 파일들을 담을 디렉토리 생성
