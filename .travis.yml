@@ -1,11 +1,14 @@
 language: node_js
 node_js:
 - 12.18.3
+
 brances:
   only:
   - develop
+
 cache:
   directories: "– node_modules"
+
 before_install:
 - cd server
 - openssl aes-256-cbc -K $encrypted_3b9f0b9d36d1_key -iv $encrypted_3b9f0b9d36d1_iv
@@ -13,36 +16,40 @@ before_install:
 - tar xvf secrets.tar
 - npm install
 - npm install nodemon --save-dev
+
 script:
 - npm start
+
 before_deploy:
-- rm -rf node_modules
-- mkdir -p before-deploy
-- cp scripts/*.sh before-deploy/
-- cp appspec.yml before-deploy/
-- cd before-deploy && zip -r before-deploy *
-- cd ../ && mkdir -p deploy
-- mv before-deploy/before-deploy.zip deploy/Praise-Server.zip
+  - rm -rf node_modules
+  - mkdir -p before-deploy
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - cd before-deploy && zip -r before-deploy *
+  - cd ../ && mkdir -p deploy
+  - mv before-deploy/before-deploy.zip deploy/Praise-Server.zip
+
 deploy:
-- provider: s3
-  access_key_id: "$AWS_ACCESS_KEY"
-  secret_access_key: "$AWS_SECRET_KEY"
-  bucket: aws-gyun-s3
-  region: ap-northeast-2
-  skip_cleanup: true
-  acl: private
-  local_dir: deploy
-  wait-until-deployed: true
-- provider: codedeploy
-  access_key_id: "$AWS_ACCESS_KEY"
-  secret_access_key: "$AWS_SECRET_KEY"
-  bucket: aws-gyun-s3
-  key: Praise-Server.zip
-  bundle_type: zip
-  application: Praise
-  deployment_group: Praise-Group
-  region: ap-northeast-2
-  wait-until-deployed: true
+  - provider: s3
+    access_key_id: "$AWS_ACCESS_KEY"
+    secret_access_key: "$AWS_SECRET_KEY"
+    bucket: aws-gyun-s3
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deployed: true
+  - provider: codedeploy
+    access_key_id: "$AWS_ACCESS_KEY"
+    secret_access_key: "$AWS_SECRET_KEY"
+    bucket: aws-gyun-s3
+    key: Praise-Server.zip
+    bundle_type: zip
+    application: Praise
+    deployment_group: Praise-Group
+    region: ap-northeast-2
+    wait-until-deployed: true
+
 notification:
   email:
     recipients:
