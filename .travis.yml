@@ -8,6 +8,7 @@ brances:
 
 install:
   - npm install
+  - npm install nodemon
 
 
 script:
