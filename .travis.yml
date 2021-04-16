@@ -17,7 +17,6 @@ before_install:
 - npm install
 - npm install nodemon --save-dev
 
-
 before_deploy:
   - rm -rf node_modules
   - mkdir -p before-deploy
