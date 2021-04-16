@@ -11,6 +11,7 @@ install:
 
 
 script:
+  - cd server
   - npm start
 
 cache:
