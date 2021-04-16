@@ -7,9 +7,9 @@ brances:
 cache:
   directories: "– node_modules"
 before_install:
+- cd server
 - openssl aes-256-cbc -K $encrypted_3b9f0b9d36d1_key -iv $encrypted_3b9f0b9d36d1_iv
   -in secrets.tar.enc -out secrets.tar -d
-- cd server
 - tar xvf secrets.tar
 - npm install
 - npm install nodemon --save-dev
