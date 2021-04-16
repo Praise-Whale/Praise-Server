@@ -1,4 +1,2 @@
-cd /home/ec2-user/Praise-Server/server/
+cd /home/ec2-user/
 git pull origin develop
-
-pm2 restart 0
