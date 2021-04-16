@@ -2,11 +2,13 @@ language: node_js
 node_js:
   - "12.18.3"
 
-install:
-  - npm install
 brances:
   only:
     - develop
+
+install:
+  - npm install
+
 
 script:
   - npm start
