@@ -11,7 +11,8 @@ cache:
     – node_modules  
 
 before_install:
-  - cd server
+  - cd server 
+  - cp -r config /home/travis/build/Praise-Whale/Praise-Server/server 
   - npm install
   - npm install nodemon --save-dev
 
