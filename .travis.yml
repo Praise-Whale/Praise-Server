@@ -11,11 +11,11 @@ cache:
     – node_modules  
 
 before_install:
+  - cd server
   - npm install
   - npm install nodemon --save-dev
 
 script:
-  - cd server
   - npm start
   
 before_deploy:
