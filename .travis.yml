@@ -10,7 +10,7 @@ cache:
   directories:
     – node_modules  
 
-install:
+before_install:
   - npm install
   - npm install nodemon --save-dev
 
