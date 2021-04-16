@@ -46,6 +46,8 @@ deploy:
     deployment_group: Praise-Group
     region: ap-northeast-2
     wait-until-deployed: true
+    on:
+      branch: develop
 
 notification:
   email:
