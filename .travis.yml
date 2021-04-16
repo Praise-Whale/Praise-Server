@@ -6,6 +6,10 @@ brances:
   only:
     - develop
 
+cache:
+  directories:
+    – node_modules  
+
 install:
   - npm install
   - npm install nodemon --save-dev
@@ -14,10 +18,7 @@ install:
 script:
   - cd server
   - npm start
-
-cache:
-  directories:
-    – node_modules    
+  
 
 before_deploy:
   - rm -rf node_modules 
