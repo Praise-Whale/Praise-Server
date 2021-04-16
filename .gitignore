@@ -110,4 +110,5 @@ temp/
 config/
 .DS_Store
 
+test.tar
 # End of https://www.gitignore.io/api/node
