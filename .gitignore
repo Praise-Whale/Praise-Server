@@ -111,4 +111,5 @@ config/
 .DS_Store
 
 test.tar
+test.tar.enc
 # End of https://www.gitignore.io/api/node
