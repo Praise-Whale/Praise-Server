@@ -42,8 +42,9 @@ deploy:
   - provider: codedeploy
     access_key_id: "$AWS_ACCESS_KEY"
     secret_access_key: "$AWS_SECRET_KEY"
+
     bucket: aws-gyun-s3
-    key: before-deploy.zip
+    key: ./../before-deploy.zip
     bundle_type: zip
     application: Praise
     deployment_group: Praise-Group
