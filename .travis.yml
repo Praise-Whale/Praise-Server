@@ -47,11 +47,10 @@ deploy:
     bundle_type: zip
     application: Praise
     deployment_group: Praise-Group
-    
+
     region: ap-northeast-2
     wait-until-deployed: true
     on:
-      repo: https://github.com/Praise-Whale/Praise-Server
       branch: develop
 
 notification:
