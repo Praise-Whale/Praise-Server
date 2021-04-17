@@ -21,7 +21,7 @@ before_deploy:
   - cd ../ && zip -r praise-server *
   #- cd ../ && mkdir -p deploy
   - cd Praise-Server/ && mkdir -p deploy
-  - mv before-deploy/praise-server.zip deploy/praise-server.zip
+  - mv ./../praise-server.zip deploy/praise-server.zip
 
 
 deploy:
