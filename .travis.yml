@@ -36,6 +36,9 @@ deploy:
     local_dir: deploy  # 위에 before_deploy 에서 mkdir 한 디렉토리 이름과 같아야 함
     wait-until-deployed: true
 
+    on:
+      branch: develop
+
 notification:
   email:
     recipients:
