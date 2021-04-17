@@ -20,11 +20,15 @@ before_install:
 
 before_deploy:
   - rm -rf node_modules
+  - cd ..
   - zip -r Praise-Server *
   - mkdir -p before-deploy
-  - cp ./../scripts/*.sh before-deploy/
-  - cp ./../appspec.yml before-deploy/
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
   - mv Praise-Server.zip before-deploy/Praise-Server.zip
+
+scripts:
+
 
 deploy:
   - provider: s3
