@@ -17,9 +17,9 @@ before_deploy:
   - mkdir -p before-deploy
   - cp scripts/*.sh before-deploy/
   - cp appspec.yml before-deploy/
-  - mkdir -p deploy
-  - cd before-deploy && zip -r before-deploy *
-  - cd ../ && mv before-deploy/praise-server.zip deploy/Praise-Server.zip
+  - cd before-deploy && zip -r praise-server *   # praise-server 이름으로 zip 파일을 만듬
+  - cd ../ && mkdir -p deploy
+  - mv before-deploy/praise-server.zip deploy/praise-server.zip
 
 
 deploy:
