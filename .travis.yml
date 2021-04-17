@@ -44,7 +44,7 @@ deploy:
     key: praise-server.zip    # S3 버킷 내부에 존재하는 이름
     bundle_type: zip
     application: Praise-Node
-    deployment_group: Praise-Node-Group
+    deployment_group: Praise-Node
 
     region: ap-northeast-2
     wait-until-deployed: true
