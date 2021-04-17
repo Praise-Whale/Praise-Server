@@ -18,7 +18,7 @@ before_deploy:
   - cp scripts/*.sh before-deploy/
   - cp appspec.yml before-deploy/
   - cd ../ && mkdir -p deploy
-  - mv before-deploy/* deploy/
+  - mv before-deploy/deploy.sh deploy/
 
 
 deploy:
