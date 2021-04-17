@@ -22,7 +22,7 @@ before_deploy:
   - cp scripts/*.sh before-deploy/
   - cp appspec.yml before-deploy/
   - cd ../ && rm -rf node_modules
-  - cd zip -r Praise-Server *
+  - zip -r Praise-Server *
   - mv Praise-Server.zip before-deploy/Praise-Server.zip
 
 
