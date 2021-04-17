@@ -1,74 +1,147 @@
-const responseMessage = require("../modules/responseMessage");
 const statusCode = require("../modules/statusCode");
+const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
-const { User } = require("../models");
-const { userService } = require("../service");
 const jwt = require('../modules/jwt');
+const userService = require('../service/userService');
 
 module.exports = {
   signup: async (req, res) => {
-    const { email, password, userName } = req.body;
+    const { nickName, whaleName, deviceToken } = req.body;
 
-    if (!email || !password || !userName) {
-      console.log("필요한 값이 없습니다");
-      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    if (!nickName || !whaleName || !deviceToken) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
     }
 
-    try {
-      const alreadyEmail = await userService.emailCheck(email);
+    const nickNameCheck = await userService.nickNameCheck(nickName);
 
-      if (alreadyEmail) {
-        console.log("이미 존재하는 이메일 입니다");
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_ID));
-      }
-
-      const user = await userService.signup(email, userName, password);
-
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_IN_SUCCESS, {
-          id: user.id,
-          email,
-          userName,
-        })
-      );
-    } catch (err) {
-      console.error(err);
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.SIGN_IN_FAIL));
+    if (nickNameCheck) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_NICKNAME));
+      return;
     }
+
+    const userResult = await userService.signUp(nickName, whaleName, deviceToken);
+
+    const { id } = userResult;
+
+    const { accessToken, refreshToken } = await jwt.sign(id);
+    
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGNUP_SUCCESS, {
+      accessToken: accessToken,
+      refreshToken: refreshToken
+    }))
+  },
+  nickNameCheck: async (req, res) => {
+    const { nickName } = req.params;
+
+    if (!nickName) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
+
+    const nickNameCheck = await userService.nickNameCheck(nickName);
+
+    if (nickNameCheck) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_NICKNAME));
+      return;
+    }
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.POSSIBLE_NICKNAME));
+    return;
   },
   signin: async (req, res) => {
-    const { email, password } = req.body;
+    const { nickName } = req.body;
 
-    if (!email || !password) {
-      console.log("필요한 값이 없습니다!");
-      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    if (!nickName) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
     }
 
-    try {
-      const alreadyEmail = await userService.emailCheck(email);
-      
-      if (!alreadyEmail) {
-        console.log("없는 이메일 입니다.");
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_EMAIL));
-      }
+    const nickNameCheck = await userService.signIn(nickName);
 
-      const { salt, password: hashedPassword } = alreadyEmail;
-      const user = await userService.signin(email, password, salt);
-
-      if (!user) {
-        console.log("비밀번호가 일치하지 않습니다.");
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
-      }
-      console.log(user);
-
-      const { accessToken, refreshToken } = await jwt.sign(user);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_IN_SUCCESS, {
-          accessToken,
-          refreshToken,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.SIGN_IN_FAIL));
+    if (!nickNameCheck) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_USER))
+      return;
     }
+
+    const { id } = nickNameCheck;
+
+    const { accessToken, refreshToken } = await jwt.sign(id);
+    
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, {
+      accessToken: accessToken,
+      refreshToken: refreshToken
+    }))
   },
-};
+  userPersonalHome: async (req, res) => {
+    const userIdx = req.userIdx;
+    
+    const userHomeTap = await userService.userHomeTap(userIdx);
+
+    const { nickName, whaleName, userLevel, praiseCount } = userHomeTap[0].dataValues;
+    
+    const homeTapInfo = {
+      nickName: nickName,
+      whaleName: whaleName,
+      userLevel: userLevel,
+      praiseCount: praiseCount
+    }
+
+    // 리팩터링 해보기 -> 이것도 모듈로 뺄까
+    switch(userLevel) {
+      case 0:
+        homeTapInfo.levelUpNeedCount = 5;
+        break;
+      case 1:
+        homeTapInfo.levelUpNeedCount = 10;
+        break;
+      case 2:
+        homeTapInfo.levelUpNeedCount = 30;
+        break;
+      case 3:
+        homeTapInfo.levelUpNeedCount = 50;
+        break;
+      case 4:
+        homeTapInfo.levelUpNeedCount = 100;
+        break;
+    }
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_HOME_SUCCESS, homeTapInfo));
+    return;
+  },
+  nickNameChange: async (req, res) => {
+    const { newNickName } = req.body;
+    const userIdx = req.userIdx;
+
+    if(!newNickName) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
+
+    const nickNameCheck = await userService.nickNameCheck(newNickName);
+
+    if (nickNameCheck) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_NICKNAME));
+      return;
+    }
+
+    await userService.nickNameChange(newNickName, userIdx);
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.NICKNAME_UPDATE_SUCCESS));
+    return;
+  },
+  alaramCheck: async (req, res) => {
+    const { alarmSet } = req.body;
+    const userIdx = req.userIdx;
+
+    if (alarmSet === undefined) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
+
+    await userService.alarmUpdate(userIdx, alarmSet);
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.ALARM_UPDATE_SUCCESS));
+    return;
+  },
+}

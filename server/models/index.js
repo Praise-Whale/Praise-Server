@@ -1,20 +1,36 @@
 const Sequelize = require('sequelize');
-
-const env = process.env.NODE_ENV || 'development';         // 개발용 환경 설정
-const config = require('../config/config.json')[env];      // Sequelize 설정 파일
+const env = process.env.NODE_ENV || 'development';
+const config = require('../config/config.json')[env];
 const db = {};
 
-// Sequelize 인스턴스화
 let sequelize;
-
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  sequelize = new Sequelize(config.database, config.usename, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.praise = require('./praise')(sequelize, Sequelize);
+db.praiseTarget = require('./praiseTarget')(sequelize, Sequelize);
+db.user = require('./user')(sequelize, Sequelize);
+//db.isPraised = require('./isPraised')(sequelize, Sequelize);
+
+/** 1 : 1   Praise : PraiseTarget */
+db.praise.hasOne(db.praiseTarget, { onDelete: 'cascade' });
+db.praiseTarget.belongsTo(db.praise);
+
+/** N : M   User : Praise */
+// db.user.belongsToMany(db.praise, { through: 'isPraised', as: 'praised' });
+// db.praise.belongsToMany(db.user, { through: 'isPraised', as: 'praiser'});
+
+// db.user.hasMany(db.isPraised, { onDelete: 'cascade' });
+// db.praise.hasMany(db.isPraised, { onDelete: 'cascade' });
+
+/** 1 : N   User : PraiseTarget */
+db.user.hasMany(db.praiseTarget, { ondDelete: 'cascade' });
+db.praiseTarget.belongsTo(db.user, { onDelete: 'cascade' });
 
 module.exports = db;
