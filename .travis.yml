@@ -37,18 +37,6 @@ deploy:
     local_dir: deploy  # 위에 before_deploy 에서 mkdir 한 디렉토리 이름과 같아야 함
     wait-until-deployed: true
 
-  - provider: codedeploy  
-    access_key_id: "$AWS_ACCESS_KEY"
-    secret_access_key: "$AWS_SECRET_KEY"
-
-    bucket: gyunny
-    key: praise-server.zip    # S3 버킷 내부에 존재하는 이름
-    bundle_type: zip
-    application: Gyun
-    deployment_group: Gyun-Group
-
-    region: ap-northeast-2
-    wait-until-deployed: true
     on:
       branch: develop
 
