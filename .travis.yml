@@ -43,8 +43,8 @@ deploy:
     bucket: aws-gyun-s3
     key: praise-server.zip    # S3 버킷 내부에 존재하는 이름
     bundle_type: zip
-    application: Praise-Node
-    deployment_group: Praise-Node
+    application: NodeJS
+    deployment_group: NodeJS_Group
 
     region: ap-northeast-2
     wait-until-deployed: true
