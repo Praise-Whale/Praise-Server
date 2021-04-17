@@ -17,11 +17,11 @@ before_install:
 - tar xvf secrets.tar
 
 before_deploy:
+  - rm -rf node_modules
   - cd ..
   - mkdir -p before-deploy
   - cp scripts/*.sh before-deploy/
   - cp appspec.yml before-deploy/
-  - cd ../ && rm -rf node_modules
   - zip -r Praise-Server *
   - mv Praise-Server.zip before-deploy/Praise-Server.zip
 
