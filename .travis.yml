@@ -23,7 +23,6 @@ before_deploy:
   - cd Praise-Server/ && mkdir -p deploy
   - mv ./../praise-server.zip deploy/praise-server.zip
 
-
 deploy:
   - provider: s3
     access_key_id: "$AWS_ACCESS_KEY"
