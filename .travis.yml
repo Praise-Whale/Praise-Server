@@ -13,10 +13,10 @@ before_install:
 - tar xvf secrets.tar
 
 before_deploy:
-  - rm -rf node_modules
-  - cd ../ && mkdir -p before-deploy
-  - cp scripts/*.sh before-deploy/
-  - cp appspec.yml before-deploy/
+  - cd ../ && rm -rf node_modules
+  # - mkdir -p before-deploy
+  # - cp scripts/*.sh before-deploy/
+  # - cp appspec.yml before-deploy/
   #- cd before-deploy && zip -r praise-server *   # praise-server 이름으로 zip 파일을 만듬
   - cd ../ && zip -r praise-server *
   #- cd ../ && mkdir -p deploy
