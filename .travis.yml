@@ -21,7 +21,7 @@ before_deploy:
   - mkdir -p before-deploy
   - cp scripts/*.sh before-deploy/
   - cp appspec.yml before-deploy/
-  - zip -r Praise-Server *
+  - cd ../ && zip -r Praise-Server *
   - mv Praise-Server.zip before-deploy/Praise-Server.zip
 
 
