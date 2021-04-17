@@ -20,12 +20,11 @@ before_install:
 
 before_deploy:
   - rm -rf node_modules
+  - zip -r Praise-Server *
   - mkdir -p before-deploy
   - cp ./../scripts/*.sh before-deploy/
   - cp ./../appspec.yml before-deploy/
-  - cd before-deploy && zip -r before-deploy *
-  - cd ../ && mkdir -p deploy
-  - mv before-deploy/before-deploy.zip deploy/SpringBoot_CI-CD.zip
+  - mv Praise-Server.zip before-deploy/Praise-Server.zip
 
 deploy:
   - provider: s3
@@ -38,21 +37,6 @@ deploy:
     acl: private
     local_dir: deploy
     wait-until-deployed: true
-
-  - provider: codedeploy
-    access_key_id: "$AWS_ACCESS_KEY"
-    secret_access_key: "$AWS_SECRET_KEY"
-
-    bucket: aws-gyun-s3
-    key: SpringBoot_CI-CD.zip
-    bundle_type: zip
-    application: Praise
-    deployment_group: Praise-Group
-
-    region: ap-northeast-2
-    wait-until-deployed: true
-    on:
-      branch: develop
 
 notification:
   email:
