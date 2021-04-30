@@ -3,6 +3,7 @@ const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
 const jwt = require('../modules/jwt');
 const userService = require('../service/userService');
+const { sequelize } = require("../models");
 
 module.exports = {
   signup: async (req, res) => {

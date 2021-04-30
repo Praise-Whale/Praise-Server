@@ -21,6 +21,20 @@
 
 <br>
 
+## `서버 아키텍쳐`
+
+![스크린샷 2021-04-30 오전 9 50 26](https://user-images.githubusercontent.com/45676906/116635342-80260d80-a999-11eb-93c5-682e2956e33a.png)
+
+<br>
+
+## `ERD(Entity Relation Diagram)`
+
+![ERD](https://user-images.githubusercontent.com/45676906/111873904-0718bb00-89d6-11eb-81be-8af3b5924eed.png)
+
+
+
+<br>
+
 ## `models/index.js`
 
 ```javascript
@@ -55,12 +69,6 @@ module.exports = db;
 ```
 
 <br>
-
-## `ERD(Entity Relation Diagram)`
-
-![ERD](https://user-images.githubusercontent.com/45676906/111873904-0718bb00-89d6-11eb-81be-8af3b5924eed.png)
-
-
 
 <br>
 
